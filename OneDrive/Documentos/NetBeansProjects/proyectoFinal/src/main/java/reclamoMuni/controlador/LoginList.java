@@ -40,19 +40,18 @@ public class LoginList extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int userID;
-        Modelo model = new Modelo(new LoginDAOMySQL(), new UsuarioDAOMySQL());
-        int id;
-        UsuarioDTO user = (UsuarioDTO) request.getSession().getAttribute("usuario");
-        id = Integer.parseInt(request.getParameter("id"));
-        boolean esValido = model.idValido(id);
 
+        Modelo model = new Modelo(new LoginDAOMySQL(), new UsuarioDAOMySQL());
+        UsuarioDTO user = (UsuarioDTO) request.getSession().getAttribute("usuario");
+        int id = user.getId();
+        boolean esValido = model.idValido(id);
+        //System.out.println(user.toString());
         if (user.getEs_admin()) {
             if (esValido) {
                 List<LoginDTO> logins = model.obtenerLogins(id);
                 request.setAttribute("id", request.getParameter("id"));
                 request.setAttribute("logins", logins);
-                RequestDispatcher vista = request.getRequestDispatcher("WEB-INF/pages/loginHistory.jsp");
+                RequestDispatcher vista = request.getRequestDispatcher("WEB-INF/views/loginList.jsp");
                 vista.forward(request, response);
             } else {
                 request.setAttribute("mensajeError", "Usuario no encontrado");
@@ -77,12 +76,13 @@ public class LoginList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        UsuarioDTO persona = (UsuarioDTO) request.getSession().getAttribute("usuario");
+        UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute("usuario");
 
-        if (request.getParameter("id") == null) {
+        if (!usuario.es_valido) {
             request.setAttribute("mensajeError", "No tenes permiso para acceder a esta pag");
             request.getRequestDispatcher("WEB-INF/views/error.jsp").forward(request, response);
         } else {
+            request.getSession().setAttribute("usuario", usuario);
             processRequest(request, response);
         }
     }

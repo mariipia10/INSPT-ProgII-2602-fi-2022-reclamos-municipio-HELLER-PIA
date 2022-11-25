@@ -33,6 +33,7 @@ public class FiltroLogin implements Filter {
 
         HttpSession session = httpRequest.getSession();
         if (session != null && session.getAttribute("usuario") != null) {
+            System.out.println("aca");
             chain.doFilter(request, response); // Ir al siguiente en la cadena de filters
             //en caso de que no haya uno va directo a una de esas paginas....
         } else {

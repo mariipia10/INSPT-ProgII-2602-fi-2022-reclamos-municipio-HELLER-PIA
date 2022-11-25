@@ -34,6 +34,8 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        UsuarioDTO user = (UsuarioDTO) request.getSession().getAttribute("usuario");
+        request.getSession().setAttribute("usuario", user);
         request.getRequestDispatcher("WEB-INF/pages/login.jsp").forward(request, response);
     }
 
@@ -43,7 +45,7 @@ public class LoginServlet extends HttpServlet {
         String pass = request.getParameter("pass");
         Modelo model = new Modelo(new LoginDAOMySQL(), new UsuarioDAOMySQL(),new ReclamoDAOMySQL());
         UsuarioDTO usuario  =model.login(user, pass);
-        System.out.println(usuario);
+        //System.out.println(usuario);
         if (usuario.es_valido) {
             List<ReclamoDTO> reclamos;
             LoginDTO login = new LoginDTO(usuario.getId(), LocalDate.now(), LocalTime.now());
