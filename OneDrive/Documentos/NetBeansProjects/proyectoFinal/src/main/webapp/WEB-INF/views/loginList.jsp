@@ -4,6 +4,8 @@
     Author     : piahe
 --%>
 
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c"  %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,7 +15,7 @@
     </head>
     <body>
         <h1>Listado de logins:</h1>
-        <table style="width:100%">
+        <table>
             <tr>
                 <th>User</th>
                 <th>Dia</th>
