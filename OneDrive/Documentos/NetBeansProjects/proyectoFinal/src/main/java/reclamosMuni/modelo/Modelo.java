@@ -21,15 +21,23 @@ public class Modelo {
     private LoginDAO loginDAO;
     private UsuarioDAO usuarioDAO;
 
+    public Modelo(LoginDAO loginDAO, UsuarioDAO usuarioDAO,ReclamoDAOMySQL reclamo) {
+        this.loginDAO = loginDAO;
+        this.usuarioDAO = usuarioDAO;
+        this.reclamo = reclamo;
+    }
     public Modelo(LoginDAO loginDAO, UsuarioDAO usuarioDAO) {
         this.loginDAO = loginDAO;
         this.usuarioDAO = usuarioDAO;
     }
     
+    
 
     
-    
-    public Collection<ReclamoDTO> obtenerReclamos() {
+    public List<ReclamoDTO>listarPorUser(UsuarioDTO user){
+        return reclamo.listarPorUser(user);
+    }
+    public List<ReclamoDTO> obtenerReclamos() {
         return reclamo.listar();
     }
     public List <ReclamoDTO> getReclamos(){

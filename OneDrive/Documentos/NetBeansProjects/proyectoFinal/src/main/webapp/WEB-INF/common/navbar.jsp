@@ -22,8 +22,6 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-item nav-link active" href="${pageContext.request.contextPath}/parcial2">Login <span class="sr-only"></span></a>
-                    
-                    <a class="nav-item nav-link" href="#">logout</a>
                     <a class="nav-item nav-link "  href="${pageContext.request.contextPath}/loginHistory.jsp">Ver Logins</a>
                 </div>
             </div>

@@ -39,70 +39,29 @@ public class LoginServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, java.io.IOException {
-
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
-        //UsuarioDTO usuario = usuarioDAO.login(user, pass);
-
-        Modelo model = new Modelo(new LoginDAOMySQL(), new UsuarioDAOMySQL());
+        Modelo model = new Modelo(new LoginDAOMySQL(), new UsuarioDAOMySQL(),new ReclamoDAOMySQL());
         UsuarioDTO usuario  =model.login(user, pass);
         System.out.println(usuario);
         if (usuario.es_valido) {
-
+            List<ReclamoDTO> reclamos;
             LoginDTO login = new LoginDTO(usuario.getId(), LocalDate.now(), LocalTime.now());
             model.cargarLogin(login);
-            System.out.println("login");
-            //Guardandando y seteando los datos y configuracion del usuario
+            if(usuario.getEs_admin()){
+                reclamos = model.obtenerReclamos();
+            }else{
+                reclamos = model.listarPorUser(usuario);
+            }
             HttpSession session = request.getSession();
             session.setMaxInactiveInterval(20);
             request.getSession().setAttribute("usuario", usuario);
+            request.getSession().setAttribute("reclamos", reclamos);
             request.getRequestDispatcher("/WEB-INF/views/reclamos.jsp").forward(request, response);
-
-            //String haciaDondeIba = request.getParameter("deDondeViene");
-            //response.sendRedirect(request.getContextPath() + haciaDondeIba);
         } else {
             request.setAttribute("mensajeError", "401: Usuario no encontrado");
             request.getRequestDispatcher("WEB-INF/views/error.jsp").forward(request, response);
         }
     }
-    /*
-        try {
-            LoginDTO login = new LoginDTO(usuario.getId(), LocalDate.now(), LocalTime.now());                     
-            HttpSession session = request.getSession();
-            session.setMaxInactiveInterval(35);
-            request.getSession().setAttribute("usuario", usuario);
-            String haciaDondeIba = request.getParameter("deDondeViene");
-            response.sendRedirect(request.getContextPath() + haciaDondeIba);
-            //request.setAttribute("id", usuario.getId());
-        } catch (NullPointerException ex) {
-            request.setAttribute("mensajeError", "No existe usuario/contraseña");
-            v = request.getRequestDispatcher("error.jsp");
-        } finally {
-            v.forward(request, response);
-        }
-    if(usuario.es_valido
-
-    
-        ){
-            List<ReclamoDTO> reclamos = null;
-        ReclamoDAOMySQL reclamoDAO = new ReclamoDAOMySQL();
-        if (usuario.getEs_admin() == 1) {
-            reclamos = reclamoDAO.listar();
-        } else {
-            reclamos = reclamoDAO.listarPorUser(usuario);
-        }
-
-        request.setAttribute("reclamos", reclamos);
-        request.getRequestDispatcher("/WEB-INF/views/reclamos.jsp").forward(request, response);
-    }
-
-    
-        else{
-            request.setAttribute("mensajeError", "No existe ese user o contrasenia");
-        v = request.getRequestDispatcher("WEB-INF/views/error.jsp");
-        v.forward(request, response);
-
-    }        //response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Login invalido");
-*/
 }
 

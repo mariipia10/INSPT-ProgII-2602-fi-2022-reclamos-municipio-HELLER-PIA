@@ -57,8 +57,8 @@ public class UsuarioDTO {
         this.pass = pass;
     }
 
-    public int getEs_admin() {
-        return es_admin;
+    public boolean getEs_admin() {
+        return es_admin==1;
     }
 
     public void setEs_admin(int es_admin) {

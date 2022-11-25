@@ -47,7 +47,7 @@ public class LoginList extends HttpServlet {
         id = Integer.parseInt(request.getParameter("id"));
         boolean esValido = model.idValido(id);
 
-        if (user.getEs_admin() == 1) {
+        if (user.getEs_admin()) {
             if (esValido) {
                 List<LoginDTO> logins = model.obtenerLogins(id);
                 request.setAttribute("id", request.getParameter("id"));
