@@ -31,27 +31,27 @@ public class ReclamoDTO implements Serializable{
     private Date fecha_inicio;
     private Date fecha_fin;
     private int persona_id;
-    private int categoria_id;
+    private String categoria;
     private String direccion;
     
     public ReclamoDTO() {}
 
-    public ReclamoDTO(int id, String descripcion, int persona_id, int categoria_id, String direccion) {
+    public ReclamoDTO(int id, String descripcion, int persona_id, String categoria, String direccion) {
         this.id = id;
         this.descripcion = descripcion;
         this.persona_id = persona_id;
-        this.categoria_id = categoria_id;
+        this.categoria = categoria;
         this.direccion = direccion;
         //System.out.println("RECLAMO DTO CONSTRUCTORS");
     }
 
-    public ReclamoDTO(int id,String descripcion,  Date fecha_inicio, Date fecha_fin, int persona_id, int categoria_id, String direccion) {
+    public ReclamoDTO(int id,String descripcion,  Date fecha_inicio, Date fecha_fin, int persona_id, String categoria, String direccion) {
         setId(id);
         setDescripcion(descripcion);
         setFecha_inicio(fecha_inicio);
         setFecha_fin(fecha_fin);
         setPersona_id(persona_id);
-        setCategoria_id(categoria_id);
+        setCategoria(categoria);
         setDireccion(direccion);
     }
 
@@ -79,12 +79,12 @@ public class ReclamoDTO implements Serializable{
         this.persona_id = persona_id;
     }
 
-    public int getCategoria_id() {
-        return categoria_id;
+    public String getCategoria() {
+        return categoria;
     }
 
-    public void setCategoria_id(int categoria_id) {
-        this.categoria_id = categoria_id;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public String getDireccion() {
@@ -134,7 +134,7 @@ public class ReclamoDTO implements Serializable{
 
     @Override
     public String toString() {
-        return "ReclamoDTO{" + "id=" + id + ", descripcion=" + descripcion + ", fecha_inicio=" + fecha_inicio + ", fecha_fin=" + fecha_fin + ", persona_id=" + persona_id + ", categoria_id=" + categoria_id + ", direccion=" + direccion + '}';
+        return "ReclamoDTO{" + "id=" + id + ", descripcion=" + descripcion + ", fecha_inicio=" + fecha_inicio + ", fecha_fin=" + fecha_fin + ", persona_id=" + persona_id + ", categoria=" + categoria + ", direccion=" + direccion + '}';
     }
     
 

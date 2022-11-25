@@ -1,6 +1,6 @@
 <%-- 
-    Document   : login-invalido
-    Created on : 4 nov. 2022, 14:20:31
+    Document   : error
+    Created on : 25 nov. 2022, 05:23:46
     Author     : piahe
 --%>
 
@@ -9,9 +9,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login invalido</title>
+        <title>Reclamos</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <jsp:include page="../common/navbar.jsp" />
+        <h1>ERROR</h1>
+        <p>
+            ${mensajeError}
+        </p>
     </body>
 </html>

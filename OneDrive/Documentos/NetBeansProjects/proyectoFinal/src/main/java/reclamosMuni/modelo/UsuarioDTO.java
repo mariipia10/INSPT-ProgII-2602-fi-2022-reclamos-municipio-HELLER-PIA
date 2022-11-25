@@ -16,12 +16,29 @@ public class UsuarioDTO {
     private int es_admin;
     public boolean es_valido;
 
-    public int getId() {
-        return id;
+    public UsuarioDTO(){
+    }
+
+    public UsuarioDTO(int id, String nombre_usuario, String pass, int es_admin) {
+        setId(id);
+        this.nombre_usuario = nombre_usuario;
+        this.pass = pass;
+        this.es_admin = es_admin;
+    }
+    public UsuarioDTO(String nombre_usuario, String pass) {
+        this.nombre_usuario = nombre_usuario;
+        this.pass = pass;
     }
 
     public void setId(int id) {
-        this.id = id;
+        if(id>0){
+            this.id = id;
+        }
+    }
+
+    
+    public int getId() {
+        return id;
     }
 
     public String getNombre_usuario() {
@@ -44,12 +61,21 @@ public class UsuarioDTO {
         return es_admin;
     }
 
+    public void setEs_admin(int es_admin) {
+        this.es_admin = es_admin;
+    }
+
     public boolean esValido() {
         return es_valido;
     }
 
     public void setValido(boolean valido) {
         this.es_valido = valido;
+    }
+
+    @Override
+    public String toString() {
+        return "UsuarioDTO{" + "id=" + id + ", nombre_usuario=" + nombre_usuario + ", pass=" + pass + ", es_admin=" + es_admin + ", es_valido=" + es_valido + '}';
     }
 
 }

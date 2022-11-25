@@ -20,12 +20,12 @@ import reclamosMuni.modelo.ReclamoDTO;
  *
  * @author piahe
  */
-@WebServlet(name = "ReclamosServlet", urlPatterns = {"/reclamos"})
+@WebServlet(name = "ReclamosServlet", urlPatterns = {"/reclamos/all"})
 public class ReclamosServlet extends HttpServlet {
     private Modelo model;
     @Override
     public void init() throws ServletException{
-        this.model = new Modelo();
+        //this.model = new Modelo();
     }
 
     /**
@@ -70,7 +70,6 @@ public class ReclamosServlet extends HttpServlet {
         System.out.println("reclamos = " + reclamos);
         request.setAttribute("reclamos", reclamos);
         request.getRequestDispatcher("/reclamos.jsp").forward(request, response);
-        System.out.println("Estoy en doget");
         PrintWriter out = response.getWriter();
         out.println("HOLA");
     }
