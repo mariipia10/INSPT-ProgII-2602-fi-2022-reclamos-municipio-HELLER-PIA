@@ -16,10 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import reclamosMuni.modelo.Modelo;
-import reclamosMuni.modelo.ReclamoDAOMySQL;
-import reclamosMuni.modelo.ReclamoDTO;
-import reclamosMuni.modelo.UsuarioDAOMySQL;
-import reclamosMuni.modelo.UsuarioDTO;
+import reclamosMuni.modelo.daos.impl.ReclamoDAOMySQL;
+import reclamosMuni.modelo.dtos.ReclamoDTO;
+import reclamosMuni.modelo.daos.impl.UsuarioDAOMySQL;
+import reclamosMuni.modelo.dtos.UsuarioDTO;
 import reclamosMuni.modelo.daos.impl.LoginDAOMySQL;
 import reclamosMuni.modelo.dtos.LoginDTO;
 

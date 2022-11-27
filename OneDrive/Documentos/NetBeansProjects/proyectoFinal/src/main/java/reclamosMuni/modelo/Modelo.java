@@ -5,6 +5,9 @@
 
 package reclamosMuni.modelo;
 
+import reclamosMuni.modelo.daos.impl.ReclamoDAOMySQL;
+import reclamosMuni.modelo.dtos.ReclamoDTO;
+import reclamosMuni.modelo.dtos.UsuarioDTO;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

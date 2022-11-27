@@ -5,7 +5,7 @@
 
 package reclamosMuni.modelo.daos;
 
-import reclamosMuni.modelo.UsuarioDTO;
+import reclamosMuni.modelo.dtos.UsuarioDTO;
 
 /**
  *

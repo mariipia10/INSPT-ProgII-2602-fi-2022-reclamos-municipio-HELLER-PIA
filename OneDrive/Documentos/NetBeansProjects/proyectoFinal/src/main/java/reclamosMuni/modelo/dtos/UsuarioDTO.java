@@ -2,7 +2,7 @@
  * 
  * 
  */
-package reclamosMuni.modelo;
+package reclamosMuni.modelo.dtos;
 
 /**
  *

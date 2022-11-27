@@ -3,7 +3,7 @@
  * 
  */
 
-package reclamosMuni.modelo;
+package reclamosMuni.modelo.dtos;
 
 import reclamosMuni.modelo.Conexion;
 import java.io.Serializable;

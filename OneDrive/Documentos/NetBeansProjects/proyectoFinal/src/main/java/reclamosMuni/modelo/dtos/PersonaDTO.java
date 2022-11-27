@@ -3,7 +3,7 @@
  * 
  */
 
-package reclamosMuni.modelo;
+package reclamosMuni.modelo.dtos;
 
 import java.sql.Date;
 

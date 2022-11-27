@@ -3,13 +3,15 @@
  * 
  */
 
-package reclamosMuni.modelo;
+package reclamosMuni.modelo.daos.impl;
 
+import reclamosMuni.modelo.dtos.UsuarioDTO;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import reclamosMuni.modelo.Conexion;
 import reclamosMuni.modelo.daos.UsuarioDAO;
 
 /**

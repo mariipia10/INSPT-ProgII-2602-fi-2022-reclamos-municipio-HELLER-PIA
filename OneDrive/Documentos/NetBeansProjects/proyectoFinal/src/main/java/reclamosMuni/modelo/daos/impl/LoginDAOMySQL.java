@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
 import reclamosMuni.modelo.Conexion;
-import reclamosMuni.modelo.ReclamoDTO;
+import reclamosMuni.modelo.dtos.ReclamoDTO;
 import reclamosMuni.modelo.daos.LoginDAO;
 import reclamosMuni.modelo.dtos.LoginDTO;
 

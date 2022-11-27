@@ -7,8 +7,8 @@ package reclamosMuni.modelo.daos;
 
 import java.util.Collection;
 import java.util.List;
-import reclamosMuni.modelo.ReclamoDTO;
-import reclamosMuni.modelo.UsuarioDTO;
+import reclamosMuni.modelo.dtos.ReclamoDTO;
+import reclamosMuni.modelo.dtos.UsuarioDTO;
 
 /**
  *
