@@ -14,6 +14,8 @@
         <title>Lista de logins</title>
     </head>
     <body>
+                    <jsp:include page="../common/navbar.jsp" />
+
         <h1>Listado de logins:</h1>
         <table>
             <tr>

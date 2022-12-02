@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import reclamosMuni.modelo.Conexion;
@@ -28,8 +29,8 @@ public class ReclamoDTO implements Serializable{
 //    private static final String PASS = "1234";
     private int id;
     private String descripcion;
-    private Date fecha_inicio;
-    private Date fecha_fin;
+    private LocalDate fecha_inicio;
+    private LocalDate fecha_fin;
     private int persona_id;
     private String categoria;
     private String direccion;
@@ -45,7 +46,7 @@ public class ReclamoDTO implements Serializable{
         //System.out.println("RECLAMO DTO CONSTRUCTORS");
     }
 
-    public ReclamoDTO(int id,String descripcion,  Date fecha_inicio, Date fecha_fin, int persona_id, String categoria, String direccion) {
+    public ReclamoDTO(int id,String descripcion,  LocalDate fecha_inicio, LocalDate fecha_fin, int persona_id, String categoria, String direccion) {
         setId(id);
         setDescripcion(descripcion);
         setFecha_inicio(fecha_inicio);
@@ -55,19 +56,19 @@ public class ReclamoDTO implements Serializable{
         setDireccion(direccion);
     }
 
-    public Date getFecha_inicio() {
+    public LocalDate getFecha_inicio() {
         return fecha_inicio;
     }
 
-    public void setFecha_inicio(Date fecha_inicio) {
+    public void setFecha_inicio(LocalDate fecha_inicio) {
         this.fecha_inicio = fecha_inicio;
     }
 
-    public Date getFecha_fin() {
+    public LocalDate getFecha_fin() {
         return fecha_fin;
     }
 
-    public void setFecha_fin(Date fecha_fin) {
+    public void setFecha_fin(LocalDate fecha_fin) {
         this.fecha_fin = fecha_fin;
     }
 

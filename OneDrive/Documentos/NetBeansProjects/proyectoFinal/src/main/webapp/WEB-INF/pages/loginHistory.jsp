@@ -11,6 +11,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
+            <jsp:include page="../common/navbar.jsp" />
+
     <h4>Login history</h4><!-- comment -->
     <p>Ingresa el ID del usuario a buscar<p>
         <form action="/verLogins" method="post">

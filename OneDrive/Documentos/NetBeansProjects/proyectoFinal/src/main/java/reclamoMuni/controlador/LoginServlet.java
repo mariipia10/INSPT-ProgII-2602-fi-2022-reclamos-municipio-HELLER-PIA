@@ -7,7 +7,6 @@ package reclamoMuni.controlador;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,11 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import reclamosMuni.modelo.Modelo;
+import reclamosMuni.modelo.daos.PersonaDAO;
 import reclamosMuni.modelo.daos.impl.ReclamoDAOMySQL;
 import reclamosMuni.modelo.dtos.ReclamoDTO;
 import reclamosMuni.modelo.daos.impl.UsuarioDAOMySQL;
 import reclamosMuni.modelo.dtos.UsuarioDTO;
 import reclamosMuni.modelo.daos.impl.LoginDAOMySQL;
+import reclamosMuni.modelo.daos.impl.PersonaDAOMySQL;
 import reclamosMuni.modelo.dtos.LoginDTO;
 
 /**
@@ -43,22 +44,22 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, java.io.IOException {
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
-        Modelo model = new Modelo(new LoginDAOMySQL(), new UsuarioDAOMySQL(),new ReclamoDAOMySQL());
-        UsuarioDTO usuario  =model.login(user, pass);
-        //System.out.println(usuario);
+        Modelo model = new Modelo(new LoginDAOMySQL(), new UsuarioDAOMySQL(), new PersonaDAOMySQL());
+        UsuarioDTO usuario = model.login(user, pass);
         if (usuario.es_valido) {
-            List<ReclamoDTO> reclamos;
+            //List<ReclamoDTO> reclamos;
             LoginDTO login = new LoginDTO(usuario.getId(), LocalDate.now(), LocalTime.now());
             model.cargarLogin(login);
+            /*
             if(usuario.getEs_admin()){
                 reclamos = model.obtenerReclamos();
             }else{
                 reclamos = model.listarPorUser(usuario);
-            }
+            }*/
             HttpSession session = request.getSession();
             session.setMaxInactiveInterval(20);
             request.getSession().setAttribute("usuario", usuario);
-            request.getSession().setAttribute("reclamos", reclamos);
+            //request.getSession().setAttribute("reclamos", reclamos);
             request.getRequestDispatcher("/WEB-INF/views/reclamos.jsp").forward(request, response);
         } else {
             request.setAttribute("mensajeError", "401: Usuario no encontrado");

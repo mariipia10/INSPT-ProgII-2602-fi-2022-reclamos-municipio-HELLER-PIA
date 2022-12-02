@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import reclamosMuni.modelo.daos.LoginDAO;
+import reclamosMuni.modelo.daos.PersonaDAO;
 import reclamosMuni.modelo.daos.UsuarioDAO;
 import reclamosMuni.modelo.dtos.LoginDTO;
+import reclamosMuni.modelo.dtos.PersonaDTO;
 
 /**
  *
@@ -23,11 +25,13 @@ public class Modelo {
     private ReclamoDAOMySQL reclamo;
     private LoginDAO loginDAO;
     private UsuarioDAO usuarioDAO;
+    private PersonaDAO personaDAO;
 
-    public Modelo(LoginDAO loginDAO, UsuarioDAO usuarioDAO,ReclamoDAOMySQL reclamo) {
+    //Constructors
+    public Modelo(LoginDAO loginDAO, UsuarioDAO usuarioDAO,PersonaDAO personaDAO) {
         this.loginDAO = loginDAO;
         this.usuarioDAO = usuarioDAO;
-        this.reclamo = reclamo;
+        this.personaDAO = personaDAO;
     }
     public Modelo(LoginDAO loginDAO, UsuarioDAO usuarioDAO) {
         this.loginDAO = loginDAO;
@@ -38,14 +42,14 @@ public class Modelo {
         this.reclamo = reclamo;
         this.usuarioDAO = usuarioDAO;
     }
-    
-    
-
-    
-    public List<ReclamoDTO>listarPorUser(UsuarioDTO user){
-        return reclamo.listarPorUser(user);
+     public Modelo(PersonaDAO personaDAO, UsuarioDAO usuarioDAO) {
+        this.personaDAO = personaDAO;
+        this.usuarioDAO = usuarioDAO;
     }
-    public List<ReclamoDTO> obtenerReclamos() {
+    
+    
+    //Reclamo
+     public List<ReclamoDTO> obtenerReclamos() {
         return reclamo.listar();
     }
     public List <ReclamoDTO> getReclamos(){
@@ -53,17 +57,29 @@ public class Modelo {
         lista = new ArrayList<>();
         return lista;
     }
+    
+    //LOGIN 
+    public List<ReclamoDTO>listarPorUser(UsuarioDTO user){
+        return reclamo.listarPorUser(user);
+    }
+    
     public void cargarLogin(LoginDTO login) {
         loginDAO.cargarLogin(login);
     }
     public List<LoginDTO> obtenerLogins(int id) {
         return loginDAO.obtenerLoginsPorID(id);
     }
+    //Usuario
     public boolean idValido(int id) {
         return usuarioDAO.idValido(id);
     }
     public UsuarioDTO login(String usuario, String contraseña) {
         return usuarioDAO.login(usuario, usuario);
+    }
+    
+    //Persona
+     public PersonaDTO crearPersona(UsuarioDTO usuario) {
+        return personaDAO.crearPersona(usuario);
     }
     
     

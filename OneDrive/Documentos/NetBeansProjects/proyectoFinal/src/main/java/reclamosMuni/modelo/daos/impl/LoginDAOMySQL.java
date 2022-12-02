@@ -26,9 +26,11 @@ public class LoginDAOMySQL implements LoginDAO {
     private final static String SQL_INSERT = "INSERT INTO login (id,dia,hora) VALUES (?,?,?)";
     private final static String SQL_SELECT = "SELECT * FROM reclamo.login";
     private final static String SQL_SELECT_BY_ID = "SELECT * FROM reclamo.login WHERE id=?";
-public LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
-    return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
-}
+
+    public LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
+        return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
+    }
+
     @Override
     public List<LoginDTO> obtenerLogins() {
         Connection conn = null;
@@ -43,7 +45,7 @@ public LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
                 int id = rs.getInt("id");
                 LocalDate dia = convertToLocalDateViaSqlDate(rs.getDate("dia"));
                 LocalTime hora = rs.getTime("hora").toLocalTime();
-                LoginDTO l = new LoginDTO(id,dia,hora);
+                LoginDTO l = new LoginDTO(id, dia, hora);
                 System.out.println(id + " " + dia + " " + hora);
                 logins.add(l);
             }
@@ -69,11 +71,11 @@ public LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
             stmt.setInt(1, login.getId());
-            System.out.println("lalal" + login.getDia()+ "lala" + login.getHora());
+            System.out.println("lalal" + login.getDia() + "lala" + login.getHora());
             stmt.setObject(2, login.getDia());
-            stmt.setObject(3,login.getHora());
+            stmt.setObject(3, login.getHora());
             rows = stmt.executeUpdate();
-    
+
         } catch (Exception e) {
             e.printStackTrace(System.out);
         } finally {
@@ -95,10 +97,10 @@ public LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
             stmt.setInt(1, idUser);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                 int id = rs.getInt("id");
-                 LocalDate dia = rs.getDate("dia").toLocalDate();
+                int id = rs.getInt("id");
+                LocalDate dia = rs.getDate("dia").toLocalDate();
                 LocalTime hora = rs.getTime("hora").toLocalTime();
-                LoginDTO l = new LoginDTO(id,dia,hora);
+                LoginDTO l = new LoginDTO(id, dia, hora);
                 System.out.println(id + " " + dia + " " + hora);
                 logins.add(l);
             }
@@ -114,8 +116,7 @@ public LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
         return logins;
     }
 
-    
     public static void main(String[] args) {
-         
+
     }
 }

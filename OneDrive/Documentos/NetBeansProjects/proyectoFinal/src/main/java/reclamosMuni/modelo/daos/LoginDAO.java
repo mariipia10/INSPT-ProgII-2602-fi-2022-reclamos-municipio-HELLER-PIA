@@ -13,7 +13,7 @@ import reclamosMuni.modelo.dtos.LoginDTO;
  * @author piahe
  */
 public interface LoginDAO {
-    public List<LoginDTO> obtenerLogins();
-    public List<LoginDTO> obtenerLoginsPorID(int id);
-    public void cargarLogin(LoginDTO login);
+    public List<LoginDTO> obtenerLogins(); //trae todo los logins
+    public List<LoginDTO> obtenerLoginsPorID(int id); //Trae logins x id
+    public void cargarLogin(LoginDTO login); //carga login en su tabla
 }

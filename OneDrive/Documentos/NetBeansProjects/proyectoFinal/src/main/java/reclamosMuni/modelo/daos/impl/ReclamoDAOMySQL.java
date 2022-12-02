@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -47,15 +49,15 @@ public class ReclamoDAOMySQL implements ReclamoDAO {
                 int persona_id = rs.getInt("persona_id");
                 String categoria = rs.getString("categoria");
                 String direccion = rs.getString("direccion");
-                Date fecha_inicio = rs.getDate("fecha_inicio");
-                Date fecha_fin = rs.getDate("fecha_fin");
+                LocalDate fecha_inicio = rs.getDate("fecha_inicio").toLocalDate();
+                LocalDate fecha_fin = rs.getDate("fecha_fin").toLocalDate();
                 System.out.println(id + " " + descripcion + " " + direccion);
                 ReclamoDTO r = new ReclamoDTO(id, descripcion, fecha_inicio, fecha_fin, persona_id, categoria, direccion);
                 reclamos.add(r);
             }
 
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error al buscar la lista de reclamos", ex);
         } finally {
             Conexion.Close(rs);
             Conexion.Close(stmt);
@@ -72,7 +74,7 @@ public class ReclamoDAOMySQL implements ReclamoDAO {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        ReclamoDTO reclamo = new ReclamoDTO();
+        ReclamoDTO reclamo;
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
@@ -84,19 +86,14 @@ public class ReclamoDAOMySQL implements ReclamoDAO {
             int persona_id = rs.getInt("persona_id");
             String categoria = rs.getString("categoria");
             String direccion = rs.getString("direccion");
-            Date fecha_inicio = rs.getDate("fecha_inicio");
-            Date fecha_fin = rs.getDate("fecha_fin");
-            reclamo.setDescripcion(descripcion);
-            reclamo.setPersona_id(persona_id);
-            reclamo.setCategoria(categoria);
-            reclamo.setDireccion(direccion);
-            reclamo.setFecha_inicio(fecha_inicio);
-            reclamo.setFecha_fin(fecha_fin);
+            LocalDate fecha_inicio = rs.getDate("fecha_inicio").toLocalDate();
+            LocalDate fecha_fin = rs.getDate("fecha_fin").toLocalDate();
+            reclamo = new ReclamoDTO(id, descripcion, fecha_inicio, fecha_fin, persona_id, categoria, direccion);
 
             System.out.println(id + " " + descripcion + " " + direccion + " " + fecha_inicio);
 
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error al buscar reclamo", ex);
         } finally {
             Conexion.Close(rs);
             Conexion.Close(stmt);
@@ -107,7 +104,7 @@ public class ReclamoDAOMySQL implements ReclamoDAO {
         return reclamo;
     }
 
-    //DONE
+    //NOT DONE
     @Override
     public int insertar(ReclamoDTO reclamo) {
         Connection conn = null;
@@ -119,8 +116,8 @@ public class ReclamoDAOMySQL implements ReclamoDAO {
             stmt = conn.prepareStatement(SQL_INSERT);
             stmt.setInt(1, reclamo.getId());
             rows = stmt.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error al insertar reclamo", ex);
         } finally {
             Conexion.Close(stmt);
             Conexion.Close(conn);
@@ -149,15 +146,15 @@ public class ReclamoDAOMySQL implements ReclamoDAO {
                 int persona_id = rs.getInt("persona_id");
                 String categoria = rs.getString("categoria");
                 String direccion = rs.getString("direccion");
-                Date fecha_inicio = rs.getDate("fecha_inicio");
-                Date fecha_fin = rs.getDate("fecha_fin");
+                LocalDate fecha_inicio = rs.getDate("fecha_inicio").toLocalDate();
+                LocalDate fecha_fin = rs.getDate("fecha_fin").toLocalDate();
                 System.out.println(id + " " + descripcion + " " + direccion + "  " + fecha_inicio + "  " + fecha_fin);
                 ReclamoDTO r = new ReclamoDTO(id, descripcion, fecha_inicio, fecha_fin, persona_id, categoria, direccion);
                 reclamos.add(r);
             }
 
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error al listar reclamos segun user", ex);
         } finally {
             Conexion.Close(rs);
             Conexion.Close(stmt);
@@ -178,16 +175,16 @@ public class ReclamoDAOMySQL implements ReclamoDAO {
             stmt = conn.prepareStatement(SQL_UPDATE);
             stmt.setInt(1, reclamo.getId());
             stmt.setString(2, reclamo.getDescripcion());
-            stmt.setDate(3, reclamo.getFecha_inicio());
-            stmt.setDate(4, reclamo.getFecha_fin());
+            stmt.setObject(3, reclamo.getFecha_inicio());
+            stmt.setObject(4, reclamo.getFecha_fin());
             stmt.setInt(5, reclamo.getPersona_id());
             stmt.setString(6, reclamo.getCategoria());
             stmt.setString(7, reclamo.getDireccion());
 
             rows = stmt.executeUpdate();
 
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error al actualizar reclamo", ex);
         } finally {
             Conexion.Close(stmt);
             Conexion.Close(conn);
@@ -207,8 +204,8 @@ public class ReclamoDAOMySQL implements ReclamoDAO {
             stmt = conn.prepareStatement(SQL_DELETE);
             stmt.setInt(1, reclamo.getId());
             stmt.setString(2, reclamo.getDescripcion());
-            stmt.setDate(3, reclamo.getFecha_inicio());
-            stmt.setDate(4, reclamo.getFecha_fin());
+            stmt.setObject(3, reclamo.getFecha_inicio());
+            stmt.setObject(4, reclamo.getFecha_fin());
             stmt.setInt(5, reclamo.getPersona_id());
             stmt.setString(6, reclamo.getCategoria());
             stmt.setString(7, reclamo.getDireccion());

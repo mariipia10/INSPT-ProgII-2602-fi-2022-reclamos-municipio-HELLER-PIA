@@ -18,14 +18,19 @@ public class PersonaDTO {
     private String mail;
     private String telefono;
     private int id_usuario;
-
-    public PersonaDTO(int id, String nombre, String apellido, String mail, String telefono, int id_usuario) {
+    private String dni;
+    public PersonaDTO(int id, String nombre, String apellido, String mail, String telefono, int id_usuario,String dni) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.mail = mail;
         this.telefono = telefono;
         this.id_usuario = id_usuario;
+        this.dni=dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     
