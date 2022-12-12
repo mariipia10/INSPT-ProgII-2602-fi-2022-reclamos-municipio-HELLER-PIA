@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import reclamosMuni.modelo.Modelo;
 import reclamosMuni.modelo.daos.impl.ReclamoDAOMySQL;
 import reclamosMuni.modelo.dtos.ReclamoDTO;
-import reclamosMuni.modelo.daos.impl.UsuarioDAOMySQL;
-import reclamosMuni.modelo.dtos.UsuarioDTO;
-import reclamosMuni.modelo.daos.UsuarioDAO;
+import reclamosMuni.modelo.daos.impl.*;
+import reclamosMuni.modelo.daos.*;
+import reclamosMuni.modelo.dtos.*;
 
 /**
  *
@@ -28,10 +28,7 @@ import reclamosMuni.modelo.daos.UsuarioDAO;
 @WebServlet(name = "ReclamosServlet", urlPatterns = {"/reclamos/all"})
 public class ReclamosServlet extends HttpServlet {
     private Modelo model;
-    @Override
-    public void init() throws ServletException{
-        //this.model = new Modelo();
-    }
+   
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,8 +39,10 @@ public class ReclamosServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         System.out.println("help");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -59,22 +58,18 @@ public class ReclamosServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-/*
-        Modelo model = new Modelo(new ReclamoDAOMySQL(),new UsuarioDAOMySQL());
+                 System.out.println("help1");
 
-        UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute("usuario");
-        List<ReclamoDTO> reclamos = model.obtenerReclamos();
+        //Modelo model = new Modelo(new LoginDAOMySQL(), new UsuarioDAOMySQL(), new PersonaDAOMySQL());
+        Modelo model = new Modelo(new ReclamoDAOMySQL(),new LoginDAOMySQL(), new UsuarioDAOMySQL(), new PersonaDAOMySQL());
+        PersonaDTO persona = (PersonaDTO) request.getSession().getAttribute("persona");
+        List<ReclamoDTO> reclamos = model.obtenerReclamos(persona);
         request.setAttribute("reclamos", reclamos);
 
         //Vísta de la Pagina
-        RequestDispatcher vista = request.getRequestDispatcher("/reclamos.jsp");
+        RequestDispatcher vista = request.getRequestDispatcher("/WEB-INF/views/reclamos.jsp");
         vista.forward(request, response);
-        List<ReclamoDTO> reclamos = new ReclamoDAOMySQL().listar();
-        System.out.println("reclamos = " + reclamos);
-        request.setAttribute("reclamos", reclamos);
-        request.getRequestDispatcher("/reclamos.jsp").forward(request, response);
-        PrintWriter out = response.getWriter();
-        out.println("HOLA");*/
+
     }
 
     /**
@@ -85,23 +80,13 @@ public class ReclamosServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+      @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("Estoy en dopost");
-        //request.getRequestDispatcher("/reclamos.jsp").forward(request, response);
-        //request.setAttribute("listaReclamos", model.getReclamos());
-        //processRequest(request, response);
-        PrintWriter out = response.getWriter();
-              //out.println("<html>Hola "+nom+" " + apellido + " </html>");
-               out.println("HOLADOPOST");
+        processRequest(request, response);
+          System.out.println("help3");
+       // doGet(request,response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";

@@ -33,6 +33,14 @@ public class Modelo {
         this.usuarioDAO = usuarioDAO;
         this.personaDAO = personaDAO;
     }
+
+    public Modelo(ReclamoDAOMySQL reclamo, LoginDAO loginDAO, UsuarioDAO usuarioDAO, PersonaDAO personaDAO) {
+        this.reclamo = reclamo;
+        this.loginDAO = loginDAO;
+        this.usuarioDAO = usuarioDAO;
+        this.personaDAO = personaDAO;
+    }
+    
     public Modelo(LoginDAO loginDAO, UsuarioDAO usuarioDAO) {
         this.loginDAO = loginDAO;
         this.usuarioDAO = usuarioDAO;
@@ -49,8 +57,8 @@ public class Modelo {
     
     
     //Reclamo
-     public List<ReclamoDTO> obtenerReclamos() {
-        return reclamo.listar();
+     public List<ReclamoDTO> obtenerReclamos(PersonaDTO persona) {
+        return reclamo.listar(persona);
     }
     public List <ReclamoDTO> getReclamos(){
         List<ReclamoDTO> lista;

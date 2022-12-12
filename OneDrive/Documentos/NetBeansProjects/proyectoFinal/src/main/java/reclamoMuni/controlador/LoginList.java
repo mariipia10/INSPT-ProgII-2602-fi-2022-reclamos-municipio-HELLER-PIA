@@ -42,7 +42,7 @@ public class LoginList extends HttpServlet {
             throws ServletException, IOException {
 
         Modelo model = new Modelo(new LoginDAOMySQL(), new UsuarioDAOMySQL());
-        UsuarioDTO user = (UsuarioDTO) request.getSession().getAttribute("usuario");
+        UsuarioDTO user = (UsuarioDTO) request.getSession().getAttribute("persona");
         int id = user.getId();
         boolean esValido = model.idValido(id);
         //System.out.println(user.toString());

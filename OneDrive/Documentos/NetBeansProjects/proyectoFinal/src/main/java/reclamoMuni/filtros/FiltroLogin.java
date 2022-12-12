@@ -19,7 +19,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author piahe
  */
-@WebFilter(filterName = "FiltroLogin", urlPatterns = {"/reclamos/all", "/verLogins"})
+//@WebFilter(filterName = "FiltroLogin", urlPatterns = {"/reclamos/all", "/verLogins"})
+@WebFilter(filterName = "FiltroLogin", urlPatterns = {"/verLogins"})
 
 public class FiltroLogin implements Filter {
 
@@ -30,9 +31,9 @@ public class FiltroLogin implements Filter {
             FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-
+System.out.println("aca");
         HttpSession session = httpRequest.getSession();
-        if (session != null && session.getAttribute("usuario") != null) {
+        if (session != null && session.getAttribute("persona") != null) {
             System.out.println("aca");
             chain.doFilter(request, response); // Ir al siguiente en la cadena de filters
             //en caso de que no haya uno va directo a una de esas paginas....

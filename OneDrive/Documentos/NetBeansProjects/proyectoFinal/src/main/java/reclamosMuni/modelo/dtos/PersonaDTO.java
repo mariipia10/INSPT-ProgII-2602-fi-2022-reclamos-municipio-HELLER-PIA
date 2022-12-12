@@ -33,7 +33,9 @@ public class PersonaDTO {
         this.dni = dni;
     }
 
-    
+    public String getReclamosSQL(){
+        return null;
+    }
     public int getId() {
         return id;
     }
