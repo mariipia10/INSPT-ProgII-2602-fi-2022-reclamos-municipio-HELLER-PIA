@@ -16,7 +16,12 @@ public class AdministradorDTO extends PersonaDTO {
         super(id, nombre, apellido, mail, telefono, id_usuario, dni);
     }
     
+    @Override
     public String getReclamosSQL(){
         return SQL_SELECT;
+    }
+    
+    public boolean puedeVerLogins(){
+        return true;
     }
 }

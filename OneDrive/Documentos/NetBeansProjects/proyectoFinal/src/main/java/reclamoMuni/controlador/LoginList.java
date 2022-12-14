@@ -20,7 +20,9 @@ import reclamosMuni.modelo.dtos.UsuarioDTO;
 import reclamosMuni.modelo.daos.LoginDAO;
 import reclamosMuni.modelo.daos.UsuarioDAO;
 import reclamosMuni.modelo.daos.impl.LoginDAOMySQL;
+import reclamosMuni.modelo.daos.impl.PersonaDAOMySQL;
 import reclamosMuni.modelo.dtos.LoginDTO;
+import reclamosMuni.modelo.dtos.PersonaDTO;
 
 /**
  *
@@ -41,13 +43,11 @@ public class LoginList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Modelo model = new Modelo(new LoginDAOMySQL(), new UsuarioDAOMySQL());
-        UsuarioDTO user = (UsuarioDTO) request.getSession().getAttribute("persona");
-        int id = user.getId();
+        Modelo model = new Modelo(new PersonaDAOMySQL());
+        PersonaDTO persona = (PersonaDTO) request.getSession().getAttribute("persona");
+        int id = persona.getId_usuario();
         boolean esValido = model.idValido(id);
-        //System.out.println(user.toString());
-        if (user.getEs_admin()) {
-            if (esValido) {
+        if (esValido) {
                 List<LoginDTO> logins = model.obtenerLogins(id);
                 request.setAttribute("id", request.getParameter("id"));
                 request.setAttribute("logins", logins);
@@ -57,11 +57,11 @@ public class LoginList extends HttpServlet {
                 request.setAttribute("mensajeError", "Usuario no encontrado");
                 request.getRequestDispatcher("WEB-INF/views/error.jsp").forward(request, response);
             }
-
+        /*
         } else {
             request.setAttribute("mensajeError", "No tenes permiso para acceder a esta pag");
             request.getRequestDispatcher("WEB-INF/views/error.jsp").forward(request, response);
-        }
+        }*/
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -76,14 +76,15 @@ public class LoginList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        UsuarioDTO usuario = (UsuarioDTO) request.getSession().getAttribute("usuario");
+        PersonaDTO persona = (PersonaDTO) request.getSession().getAttribute("persona");
 
-        if (!usuario.es_valido) {
+        if (persona.puedeVerLogin()) {
+            request.getSession().setAttribute("persona", persona);
+            processRequest(request, response);
+        } else {
             request.setAttribute("mensajeError", "No tenes permiso para acceder a esta pag");
             request.getRequestDispatcher("WEB-INF/views/error.jsp").forward(request, response);
-        } else {
-            request.getSession().setAttribute("usuario", usuario);
-            processRequest(request, response);
+            
         }
     }
 

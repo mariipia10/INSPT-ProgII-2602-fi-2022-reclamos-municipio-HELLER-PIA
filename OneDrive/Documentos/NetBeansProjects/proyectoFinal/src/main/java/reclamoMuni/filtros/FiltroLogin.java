@@ -31,7 +31,6 @@ public class FiltroLogin implements Filter {
             FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-System.out.println("aca");
         HttpSession session = httpRequest.getSession();
         if (session != null && session.getAttribute("persona") != null) {
             System.out.println("aca");

@@ -41,7 +41,6 @@ public class ReclamosServlet extends HttpServlet {
      */
      protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         System.out.println("help");
 
     }
 
@@ -58,9 +57,6 @@ public class ReclamosServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-                 System.out.println("help1");
-
-        //Modelo model = new Modelo(new LoginDAOMySQL(), new UsuarioDAOMySQL(), new PersonaDAOMySQL());
         Modelo model = new Modelo(new ReclamoDAOMySQL(),new LoginDAOMySQL(), new UsuarioDAOMySQL(), new PersonaDAOMySQL());
         PersonaDTO persona = (PersonaDTO) request.getSession().getAttribute("persona");
         List<ReclamoDTO> reclamos = model.obtenerReclamos(persona);
@@ -84,8 +80,7 @@ public class ReclamosServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-          System.out.println("help3");
-       // doGet(request,response);
+        doGet(request,response);
     }
     @Override
     public String getServletInfo() {

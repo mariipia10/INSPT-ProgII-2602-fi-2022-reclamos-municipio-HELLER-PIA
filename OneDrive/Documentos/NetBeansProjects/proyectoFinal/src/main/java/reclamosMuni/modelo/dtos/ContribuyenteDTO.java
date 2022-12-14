@@ -17,6 +17,7 @@ public class ContribuyenteDTO extends PersonaDTO {
         super(id, nombre, apellido, mail, telefono, id_usuario, dni);
     }
 
+    @Override
     public String getReclamosSQL(){
         return SQL_SELECT_BY_PERSONA_ID + this.getId();
     }

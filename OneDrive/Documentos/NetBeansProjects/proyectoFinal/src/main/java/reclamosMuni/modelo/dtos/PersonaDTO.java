@@ -19,6 +19,9 @@ public class PersonaDTO {
     private String telefono;
     private int id_usuario;
     private String dni;
+    
+    public PersonaDTO(){
+    }
     public PersonaDTO(int id, String nombre, String apellido, String mail, String telefono, int id_usuario,String dni) {
         this.id = id;
         this.nombre = nombre;
@@ -35,6 +38,9 @@ public class PersonaDTO {
 
     public String getReclamosSQL(){
         return null;
+    }
+    public boolean puedeVerLogin(){
+        return false;
     }
     public int getId() {
         return id;

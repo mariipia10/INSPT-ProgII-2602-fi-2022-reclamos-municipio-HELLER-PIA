@@ -33,6 +33,9 @@ public class Modelo {
         this.usuarioDAO = usuarioDAO;
         this.personaDAO = personaDAO;
     }
+    public Modelo(PersonaDAO personaDAO){
+        this.personaDAO = personaDAO;
+    }
 
     public Modelo(ReclamoDAOMySQL reclamo, LoginDAO loginDAO, UsuarioDAO usuarioDAO, PersonaDAO personaDAO) {
         this.reclamo = reclamo;
