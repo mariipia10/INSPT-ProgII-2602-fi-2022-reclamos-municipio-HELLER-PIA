@@ -24,9 +24,7 @@
                     <a class="nav-item nav-link active" href="${pageContext.request.contextPath}/parcial2">Login <span class="sr-only"></span></a>
                     <a class="nav-item nav-link "  href="${pageContext.request.contextPath}/reclamos/all">Ver Reclamos</a>
                     <a class="nav-item nav-link "  href="${pageContext.request.contextPath}/verLogins">Buscar logins</a>
-
                     <a class="nav-item nav-link "  href="${pageContext.request.contextPath}/Logout">Logout</a>
-
                 </div>
             </div>
         </nav>

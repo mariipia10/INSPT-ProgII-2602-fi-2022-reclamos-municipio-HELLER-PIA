@@ -23,7 +23,7 @@
                 <th>Hora</th>
             </tr>
             <c:forEach var="login" items="${logins}">
-                <tr>
+                <tr style="border: 1px solid black;">
                     <td>${login.dia}</td>
                     <td>${login.hora}</td>
                 </tr>

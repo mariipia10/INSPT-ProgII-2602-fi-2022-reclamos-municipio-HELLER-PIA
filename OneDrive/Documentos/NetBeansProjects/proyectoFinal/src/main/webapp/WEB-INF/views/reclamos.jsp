@@ -23,7 +23,7 @@
                 <th>Direccion</th>
             </tr>
             <c:forEach var="reclamo" items="${reclamos}">
-                <tr>
+                <tr style="border: 1px solid black;">
                     <td>${reclamo.fecha_inicio}</td>
                     <td>${reclamo.categoria}</td>
                     <td>${reclamo.direccion}</td>
