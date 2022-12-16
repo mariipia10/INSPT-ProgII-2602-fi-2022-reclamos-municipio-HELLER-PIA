@@ -16,13 +16,13 @@
         <h1>Bienvenido!</h1>
         <h3>Ingrese sus credenciales</h3>  
         <br/>  
-        <form action="${pageContext.request.contextPath}parcial2" method="post">
+        <form name="login" action="${pageContext.request.contextPath}parcial2" method="post">
             <div class="form-group-row">
                 <div class="col-xs-2">
-                    <input type="text"  class="form-control" placeholder="Usuario" name="user">
+                    <input type="text"  class="form-control" placeholder="Usuario" name="user" required>
                 </div>
                 <div class="col-xs-2">
-                    <input type="password" class="form-control" placeholder="Contrasenia" name="pass">
+                    <input type="password" class="form-control" placeholder="Contrasenia" name="pass" required>
                 </div>
             </div>
             <input type="hidden" name="deDondeViene" value="${param.origen}">

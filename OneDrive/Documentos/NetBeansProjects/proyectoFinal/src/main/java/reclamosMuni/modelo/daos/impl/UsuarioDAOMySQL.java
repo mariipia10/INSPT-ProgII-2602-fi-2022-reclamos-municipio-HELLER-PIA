@@ -78,7 +78,8 @@ public class UsuarioDAOMySQL implements UsuarioDAO {
         ResultSet rs = null;
         UsuarioDTO usuario = new UsuarioDTO();
         boolean esValido=false;
-        try {
+        if(id>0){
+             try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
             stmt.setInt(1, id);
@@ -94,8 +95,9 @@ public class UsuarioDAOMySQL implements UsuarioDAO {
             Conexion.Close(rs);
             Conexion.Close(stmt);
             Conexion.Close(conn);
-
         }
+        }
+       
 
         return esValido;
     }

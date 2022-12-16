@@ -45,15 +45,22 @@ public class LoginList extends HttpServlet {
             throws ServletException, IOException {
         Modelo model = new Modelo(new LoginDAOMySQL() , new UsuarioDAOMySQL() ,new PersonaDAOMySQL());
         PersonaDTO persona = (PersonaDTO) request.getSession().getAttribute("persona");
-        int id = Integer.parseInt(request.getParameter("id"));
-        boolean esValido = model.idValido(id);
-        if (esValido) {
+        
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        System.out.println("Integer "+ id);
+        if(id!=null){
+            boolean esValido = model.idValido(id);
+             if (esValido) {
                 List<LoginDTO> logins = model.obtenerLogins(id);
                 request.setAttribute("id", request.getParameter("id"));
                 request.setAttribute("logins", logins);
                 RequestDispatcher vista = request.getRequestDispatcher("WEB-INF/views/loginList.jsp");
                 vista.forward(request, response);
-            } else {
+            }else{
+                 request.setAttribute("mensajeError", "Usuario inválido o no encon");
+                request.getRequestDispatcher("WEB-INF/views/error.jsp").forward(request, response);
+             }
+        }else{
                 request.setAttribute("mensajeError", "Usuario no encontrado");
                 request.getRequestDispatcher("WEB-INF/views/error.jsp").forward(request, response);
             }
@@ -77,8 +84,6 @@ public class LoginList extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PersonaDTO persona = (PersonaDTO) request.getSession().getAttribute("persona");
-        System.out.println(persona.puedeVerLogin());
-        System.out.println(persona.toString());
         if (persona.puedeVerLogin()) {
             RequestDispatcher vista = request.getRequestDispatcher("/WEB-INF/pages/buscarLoginID.jsp");
             vista.forward(request, response);
