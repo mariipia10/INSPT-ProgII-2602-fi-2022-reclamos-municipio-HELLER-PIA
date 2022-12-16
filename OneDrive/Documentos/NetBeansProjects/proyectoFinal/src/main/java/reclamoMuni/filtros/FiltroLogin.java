@@ -14,13 +14,14 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import reclamosMuni.modelo.dtos.PersonaDTO;
 
 /**
  *
  * @author piahe
  */
-//@WebFilter(filterName = "FiltroLogin", urlPatterns = {"/reclamos/all", "/verLogins"})
-@WebFilter(filterName = "FiltroLogin", urlPatterns = {"/verLogins"})
+@WebFilter(filterName = "FiltroLogin", urlPatterns = {"/reclamos/all", "/verLogins"})
+//@WebFilter(filterName = "FiltroLogin", urlPatterns = {"/verLogins","/loginHistory"})
 
 public class FiltroLogin implements Filter {
 
@@ -33,9 +34,18 @@ public class FiltroLogin implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = httpRequest.getSession();
         if (session != null && session.getAttribute("persona") != null) {
+            if(httpRequest.getServletPath().contentEquals("/verLogins")){
+                    PersonaDTO persona = (PersonaDTO) session.getAttribute("persona"); 
+                
+                //String urlDoGet = persona.getUrlDoGet();
+                //String urlVerLogins = persona.getUrlVerLogins();
+                
+                //session.setAttribute("urlDoGet", urlDoGet);
+                //session.setAttribute("urlVerLogins", urlVerLogins);
+            
+            }
             System.out.println("aca");
-            chain.doFilter(request, response); // Ir al siguiente en la cadena de filters
-            //en caso de que no haya uno va directo a una de esas paginas....
+            chain.doFilter(request, response); 
         } else {
             String origin = httpRequest.getServletPath();
             String query = "?origen=" + origin;

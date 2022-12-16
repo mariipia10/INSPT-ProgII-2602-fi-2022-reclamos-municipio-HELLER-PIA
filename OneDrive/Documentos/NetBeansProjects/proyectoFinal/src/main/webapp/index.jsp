@@ -9,6 +9,7 @@
     <body>
         <h3>Reclamos Site</h3>
         <jsp:include page="WEB-INF/common/navbar.jsp" />
+        <h5>Bienvenidos al landing de la Web de reclamos de la muni </h5>
     </body>
 </html>
 

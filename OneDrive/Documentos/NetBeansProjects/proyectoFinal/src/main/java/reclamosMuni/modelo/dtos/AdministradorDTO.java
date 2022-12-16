@@ -20,8 +20,8 @@ public class AdministradorDTO extends PersonaDTO {
     public String getReclamosSQL(){
         return SQL_SELECT;
     }
-    
-    public boolean puedeVerLogins(){
+    @Override
+    public boolean puedeVerLogin(){
         return true;
     }
 }

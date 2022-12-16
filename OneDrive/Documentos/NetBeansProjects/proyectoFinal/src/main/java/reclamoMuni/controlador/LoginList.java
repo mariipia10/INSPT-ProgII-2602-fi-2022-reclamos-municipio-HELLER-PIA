@@ -18,6 +18,7 @@ import reclamosMuni.modelo.Modelo;
 import reclamosMuni.modelo.daos.impl.UsuarioDAOMySQL;
 import reclamosMuni.modelo.dtos.UsuarioDTO;
 import reclamosMuni.modelo.daos.LoginDAO;
+import reclamosMuni.modelo.daos.PersonaDAO;
 import reclamosMuni.modelo.daos.UsuarioDAO;
 import reclamosMuni.modelo.daos.impl.LoginDAOMySQL;
 import reclamosMuni.modelo.daos.impl.PersonaDAOMySQL;
@@ -42,10 +43,9 @@ public class LoginList extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        Modelo model = new Modelo(new PersonaDAOMySQL());
+        Modelo model = new Modelo(new LoginDAOMySQL() , new UsuarioDAOMySQL() ,new PersonaDAOMySQL());
         PersonaDTO persona = (PersonaDTO) request.getSession().getAttribute("persona");
-        int id = persona.getId_usuario();
+        int id = Integer.parseInt(request.getParameter("id"));
         boolean esValido = model.idValido(id);
         if (esValido) {
                 List<LoginDTO> logins = model.obtenerLogins(id);
@@ -77,10 +77,11 @@ public class LoginList extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PersonaDTO persona = (PersonaDTO) request.getSession().getAttribute("persona");
-
+        System.out.println(persona.puedeVerLogin());
+        System.out.println(persona.toString());
         if (persona.puedeVerLogin()) {
-            request.getSession().setAttribute("persona", persona);
-            processRequest(request, response);
+            RequestDispatcher vista = request.getRequestDispatcher("/WEB-INF/pages/buscarLoginID.jsp");
+            vista.forward(request, response);
         } else {
             request.setAttribute("mensajeError", "No tenes permiso para acceder a esta pag");
             request.getRequestDispatcher("WEB-INF/views/error.jsp").forward(request, response);

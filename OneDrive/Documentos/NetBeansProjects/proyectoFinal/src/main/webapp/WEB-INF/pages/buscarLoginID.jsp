@@ -16,7 +16,7 @@
     <h4>Login history</h4><!-- comment -->
     <p>Ingresa el ID del usuario a buscar<p>
         <form action="/verLogins" method="post">
-            <input type="text" name="userid" placeholder="userID">
+            <input type="text" name="id" placeholder="id">
             <input type="submit" value="Enviar">
         </form>
 </html>
