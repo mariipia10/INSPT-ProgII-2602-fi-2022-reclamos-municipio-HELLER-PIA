@@ -36,13 +36,6 @@ public class FiltroLogin implements Filter {
         if (session != null && session.getAttribute("persona") != null) {
             if(httpRequest.getServletPath().contentEquals("/verLogins")){
                     PersonaDTO persona = (PersonaDTO) session.getAttribute("persona"); 
-                
-                //String urlDoGet = persona.getUrlDoGet();
-                //String urlVerLogins = persona.getUrlVerLogins();
-                
-                //session.setAttribute("urlDoGet", urlDoGet);
-                //session.setAttribute("urlVerLogins", urlVerLogins);
-            
             }
             System.out.println("aca");
             chain.doFilter(request, response); 

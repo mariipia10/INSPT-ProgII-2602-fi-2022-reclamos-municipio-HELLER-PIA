@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import reclamosMuni.modelo.Conexion;
 import reclamosMuni.modelo.daos.UsuarioDAO;
@@ -89,8 +90,8 @@ public class UsuarioDAOMySQL implements UsuarioDAO {
                     esValido = true;
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
+        }catch (SQLException ex) {
+            throw new RuntimeException("Error al validar ID usuario", ex);
         } finally {
             Conexion.Close(rs);
             Conexion.Close(stmt);

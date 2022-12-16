@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
         Modelo model = new Modelo(new LoginDAOMySQL(), new UsuarioDAOMySQL(), new PersonaDAOMySQL());
         UsuarioDTO usuario = model.login(user, pass);
         PersonaDTO persona = new PersonaDTO();
-        if (usuario.es_valido || persona!=null ) {
+        if (usuario.es_valido || persona != null) {
             System.out.println("Es valido");
             persona = model.crearPersona(usuario);
             LoginDTO login = new LoginDTO(usuario.getId(), LocalDate.now(), LocalTime.now());

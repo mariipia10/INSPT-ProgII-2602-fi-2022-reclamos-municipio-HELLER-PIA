@@ -27,8 +27,6 @@ import reclamosMuni.modelo.dtos.*;
  */
 @WebServlet(name = "ReclamosServlet", urlPatterns = {"/reclamos/all"})
 public class ReclamosServlet extends HttpServlet {
-    private Modelo model;
-   
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

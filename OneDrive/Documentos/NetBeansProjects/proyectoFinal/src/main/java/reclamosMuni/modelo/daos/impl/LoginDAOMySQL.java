@@ -12,6 +12,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
+import java.sql.SQLException;
 import reclamosMuni.modelo.Conexion;
 import reclamosMuni.modelo.dtos.ReclamoDTO;
 import reclamosMuni.modelo.daos.LoginDAO;
@@ -50,8 +51,8 @@ public class LoginDAOMySQL implements LoginDAO {
                 logins.add(l);
             }
 
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error al obtener logins", ex);
         } finally {
             Conexion.Close(rs);
             Conexion.Close(stmt);
@@ -71,13 +72,12 @@ public class LoginDAOMySQL implements LoginDAO {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
             stmt.setInt(1, login.getId());
-            System.out.println("lalal" + login.getDia() + "lala" + login.getHora());
             stmt.setObject(2, login.getDia());
             stmt.setObject(3, login.getHora());
             rows = stmt.executeUpdate();
 
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error al cargar login", ex);
         } finally {
             Conexion.Close(stmt);
             Conexion.Close(conn);
@@ -105,8 +105,8 @@ public class LoginDAOMySQL implements LoginDAO {
                 logins.add(l);
             }
 
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
+        }catch (SQLException ex) {
+            throw new RuntimeException("Error al obtener login x ID", ex);
         } finally {
             Conexion.Close(rs);
             Conexion.Close(stmt);
