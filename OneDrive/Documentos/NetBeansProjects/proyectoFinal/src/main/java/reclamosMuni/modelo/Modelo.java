@@ -57,8 +57,6 @@ public class Modelo {
         this.personaDAO = personaDAO;
         this.usuarioDAO = usuarioDAO;
     }
-    
-    
     //Reclamo
      public List<ReclamoDTO> obtenerReclamos(PersonaDTO persona) {
         return reclamo.listar(persona);

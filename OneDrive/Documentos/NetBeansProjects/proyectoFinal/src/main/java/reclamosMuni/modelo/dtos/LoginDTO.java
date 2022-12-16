@@ -12,8 +12,6 @@ import java.time.LocalTime;
  * @author piahe
  */
 public class LoginDTO {
-
-    
     int id;
     LocalDate dia;
     LocalTime hora;
@@ -47,11 +45,4 @@ public class LoginDTO {
     public void setHora(LocalTime hora) {
         this.hora = hora;
     }
-
-    
-    
-    
-    
-    
-
 }

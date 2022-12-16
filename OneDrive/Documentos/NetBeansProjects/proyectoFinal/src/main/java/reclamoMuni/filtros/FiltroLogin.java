@@ -34,15 +34,9 @@ public class FiltroLogin implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = httpRequest.getSession();
         if (session != null && session.getAttribute("persona") != null) {
-            if(httpRequest.getServletPath().contentEquals("/verLogins")){
-                    PersonaDTO persona = (PersonaDTO) session.getAttribute("persona"); 
-            }
-            System.out.println("aca");
             chain.doFilter(request, response); 
         } else {
-            String origin = httpRequest.getServletPath();
-            String query = "?origen=" + origin;
-            request.getRequestDispatcher("/parcial2" + query).forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
         }
 
     }

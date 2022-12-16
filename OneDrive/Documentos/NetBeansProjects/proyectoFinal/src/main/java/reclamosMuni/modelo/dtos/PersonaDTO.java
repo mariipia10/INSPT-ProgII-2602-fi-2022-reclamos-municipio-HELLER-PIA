@@ -94,7 +94,4 @@ public class PersonaDTO {
     public String toString() {
         return "PersonaDTO{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", mail=" + mail + ", telefono=" + telefono + ", id_usuario=" + id_usuario + '}';
     }
-    
-    
-
 }

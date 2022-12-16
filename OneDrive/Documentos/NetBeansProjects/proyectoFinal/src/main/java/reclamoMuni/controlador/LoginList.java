@@ -53,7 +53,7 @@ public class LoginList extends HttpServlet {
                 RequestDispatcher vista = request.getRequestDispatcher("WEB-INF/views/loginList.jsp");
                 vista.forward(request, response);
             } else {
-                request.setAttribute("mensajeError", "Usuario inválido o no encon");
+                request.setAttribute("mensajeError", "Usuario inválido o no encontrado :/");
                 request.getRequestDispatcher("WEB-INF/views/error.jsp").forward(request, response);
             }
         } else {
@@ -79,7 +79,7 @@ public class LoginList extends HttpServlet {
             RequestDispatcher vista = request.getRequestDispatcher("/WEB-INF/pages/buscarLoginID.jsp");
             vista.forward(request, response);
         } else {
-            request.setAttribute("mensajeError", "No tenes permiso para acceder a esta pag");
+            request.setAttribute("mensajeError", "401 : Acceso no autorizado");
             request.getRequestDispatcher("WEB-INF/views/error.jsp").forward(request, response);
         }
     }

@@ -25,16 +25,11 @@
                     <input type="password" class="form-control" placeholder="Contrasenia" name="pass" required>
                 </div>
             </div>
-            <input type="hidden" name="deDondeViene" value="${param.origen}">
+            <!-- <input type="hidden" name="deDondeViene" value="${param.origen}">
+        --> 
             <br>
             <input type="submit" value="Ver reclamos"/>
         </form>
-        <!--
-    <form action="${pageContext.request.contextPath}parcial2" method="post">  
-        Usuario: <input type="text" name="user"/><br/><br/>  
-        Contrasenia: <input type="password" name="pass"/><br/><br/>  
-
-    </form> --> 
 
     </body>
 </html>

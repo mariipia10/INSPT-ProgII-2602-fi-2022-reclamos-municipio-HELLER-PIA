@@ -16,7 +16,7 @@
     <body>
         <jsp:include page="../common/navbar.jsp" />
         <h1>Viendo reclamos...</h1>
-        <table style="width:100%">
+        <table style="width:100%" border='1' style='border-collapse:collapse'>
             <tr>
                 <th>Fecha inicio</th>
                 <th>Categoria</th>

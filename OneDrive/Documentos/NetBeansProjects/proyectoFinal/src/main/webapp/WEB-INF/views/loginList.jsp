@@ -16,16 +16,14 @@
     <body>
                     <jsp:include page="../common/navbar.jsp" />
 
-        <h1>Listado de logins:</h1>
-        <table>
+        <h1>Listado de logins del id ${id}:</h1>
+        <table style="border: 1px solid black;">
             <tr>
-                <th>User</th>
                 <th>Dia</th>
                 <th>Hora</th>
             </tr>
             <c:forEach var="login" items="${logins}">
                 <tr>
-                    <td>${login.id}</td>
                     <td>${login.dia}</td>
                     <td>${login.hora}</td>
                 </tr>
