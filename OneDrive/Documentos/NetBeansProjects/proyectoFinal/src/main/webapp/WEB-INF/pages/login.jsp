@@ -7,10 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login</title>
-    </head>
+    <jsp:include page="../common/header.jsp" />
+
     <body>
         <jsp:include page="../common/navbar.jsp" />
         <h1>Bienvenido!</h1>
@@ -30,6 +28,6 @@
             <br>
             <input type="submit" value="Ver reclamos"/>
         </form>
-
     </body>
+    <jsp:include page="../common/footer.jsp"/>
 </html>

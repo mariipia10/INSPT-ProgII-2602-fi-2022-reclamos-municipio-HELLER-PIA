@@ -42,12 +42,15 @@ public class LoginServlet extends HttpServlet {
         PersonaDTO persona = new PersonaDTO();
         if (usuario.es_valido) {
             System.out.println("Es valido");
+            if(usuario.getEs_admin()){
+                System.out.println("Es admin!");}
             persona = model.crearPersona(usuario);
             LoginDTO login = new LoginDTO(usuario.getId(), LocalDate.now(), LocalTime.now());
             model.cargarLogin(login);
             HttpSession session = request.getSession();
             session.setMaxInactiveInterval(120);
             request.getSession().setAttribute("persona", persona);
+            System.out.println("puede ver login?" + persona.puedeVerLogin());
             request.getRequestDispatcher("reclamos/all").forward(request, response);
         } else {
             request.setAttribute("mensajeError", "401: Usuario no encontrado");

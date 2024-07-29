@@ -24,4 +24,7 @@ public class AdministradorDTO extends PersonaDTO {
     public boolean puedeVerLogin(){
         return true;
     }
+    public boolean esAdmin(){
+        return true;
+    }
 }

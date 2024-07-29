@@ -26,7 +26,7 @@ public class LoginDAOMySQL implements LoginDAO {
 
     private final static String SQL_INSERT = "INSERT INTO login (id,dia,hora) VALUES (?,?,?)";
     private final static String SQL_SELECT = "SELECT * FROM reclamo.login";
-    private final static String SQL_SELECT_BY_ID = "SELECT * FROM reclamo.login WHERE id=?";
+    private final static String SQL_SELECT_BY_ID = "SELECT * FROM reclamo.login WHERE id=? ORDER BY dia DESC";
 
     public LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
         return new java.sql.Date(dateToConvert.getTime()).toLocalDate();

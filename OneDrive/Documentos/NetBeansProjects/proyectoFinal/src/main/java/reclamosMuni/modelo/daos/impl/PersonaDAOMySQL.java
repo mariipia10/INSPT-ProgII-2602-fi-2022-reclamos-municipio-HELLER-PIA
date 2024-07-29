@@ -50,6 +50,7 @@ public class PersonaDAOMySQL implements PersonaDAO {
                 }else{
                     persona = new ContribuyenteDTO(id, nombre, apellido, mail, telefono, usuario.getId(), dni);
                 }
+                
             }
 
         }catch (SQLException ex) {
