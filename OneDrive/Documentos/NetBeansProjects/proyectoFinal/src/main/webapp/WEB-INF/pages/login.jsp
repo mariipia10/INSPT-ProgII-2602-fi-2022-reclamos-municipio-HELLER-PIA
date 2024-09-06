@@ -28,6 +28,9 @@
             <br>
             <input type="submit" value="Ver reclamos"/>
         </form>
-    </body>
-    <jsp:include page="../common/footer.jsp"/>
+    <li class="nav-item">               
+        <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/register"">Registrate!</a>
+    </li>
+</body>
+<jsp:include page="../common/footer.jsp"/>
 </html>

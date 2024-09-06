@@ -14,5 +14,5 @@ import reclamosMuni.modelo.dtos.UsuarioDTO;
  */
 public interface PersonaDAO {
 
-        public PersonaDTO crearPersona(UsuarioDTO user);
+        public PersonaDTO buscarPersonaPorUserID(UsuarioDTO user);
 }

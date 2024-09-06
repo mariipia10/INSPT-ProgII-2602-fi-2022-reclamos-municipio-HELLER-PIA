@@ -19,8 +19,7 @@ public class UsuarioDTO {
     public UsuarioDTO(){
     }
 
-    public UsuarioDTO(int id, String nombre_usuario, String pass, int es_admin) {
-        setId(id);
+    public UsuarioDTO(String nombre_usuario, String pass, int es_admin) {
         this.nombre_usuario = nombre_usuario;
         this.pass = pass;
         this.es_admin = es_admin;

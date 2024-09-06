@@ -48,7 +48,10 @@ public class Modelo {
         this.loginDAO = loginDAO;
         this.usuarioDAO = usuarioDAO;
     }
-
+    
+    public Modelo(UsuarioDAO usuarioDAO) {
+        this.usuarioDAO = usuarioDAO;
+    }
     public Modelo(ReclamoDAOMySQL reclamo, UsuarioDAO usuarioDAO) {
         this.reclamo = reclamo;
         this.usuarioDAO = usuarioDAO;
@@ -82,13 +85,17 @@ public class Modelo {
     public boolean idValido(int id) {
         return usuarioDAO.idValido(id);
     }
-    public UsuarioDTO login(String usuario, String contraseña) {
-        return usuarioDAO.login(usuario, usuario);
+    public UsuarioDTO login(String usuario, String pass) {
+        return usuarioDAO.login(usuario, pass);
     }
     
+    public UsuarioDTO register(String usuario, String pass) {
+        return usuarioDAO.register(usuario, pass);
+                
+    }
     //Persona
-     public PersonaDTO crearPersona(UsuarioDTO usuario) {
-        return personaDAO.crearPersona(usuario);
+     public PersonaDTO buscarPersonaPorUserID(UsuarioDTO usuario) {
+        return personaDAO.buscarPersonaPorUserID(usuario);
     }
     
     

@@ -29,6 +29,8 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         UsuarioDTO user = (UsuarioDTO) request.getSession().getAttribute("usuario");
         request.getSession().setAttribute("usuario", user);
+        request.getSession().setAttribute("usuario", user);
+
         request.getRequestDispatcher("WEB-INF/pages/login.jsp").forward(request, response);
     }
 
@@ -44,7 +46,7 @@ public class LoginServlet extends HttpServlet {
             System.out.println("Es valido");
             if(usuario.getEs_admin()){
                 System.out.println("Es admin!");}
-            persona = model.crearPersona(usuario);
+            persona = model.buscarPersonaPorUserID(usuario);
             LoginDTO login = new LoginDTO(usuario.getId(), LocalDate.now(), LocalTime.now());
             model.cargarLogin(login);
             HttpSession session = request.getSession();
