@@ -27,12 +27,12 @@ import reclamosMuni.modelo.dtos.*;
 public class ReclamoDAOMySQL implements ReclamoDAO {
 
     private static final String SQL_SELECT = "SELECT id,descripcion,persona_id,categoria,direccion,fecha_inicio,fecha_fin FROM reclamo";
-    private static final String SQL_SELECT_BY_ID = "SELECT id,descripcion,persona_id,categoria,direccion,fecha_inicio,fecha_fin FROM reclamo WHERE persona_id = ?";
+    private static final String SQL_SELECT_BY_ID = "SELECT id,descripcion,persona_id,categoria,direccion,fecha_inicio,fecha_fin FROM reclamo WHERE id = ?";
     private static final String SQL_SELECT_BY_PERSONA_ID = "SELECT reclamo.id, descripcion, persona_id, categoria, direccion, fecha_inicio, fecha_fin FROM reclamo INNER JOIN persona ON persona.id= reclamo.persona_id WHERE persona.id_usuario=?";
-    private static final String SQL_INSERT = "INSERT INTO reclamo(id,descripcion,fecha_inicio,fecha_fin,persona_id,categoria,direccion) VALUES (?,?,?,?,?,?,?)";
-    private static final String SQL_UPDATE = "UPDATE reclamo SET descripcion=?,fecha_inicio=?,fecha_fin=?,persona_id=?,categoria=?,direccion=?";
+    private static final String SQL_INSERT = "INSERT INTO reclamo(descripcion,fecha_inicio,fecha_fin,persona_id,categoria,direccion) VALUES (?,?,?,?,?,?)";
+    private static final String SQL_UPDATE = "UPDATE reclamo SET descripcion=?,fecha_inicio=?,fecha_fin=?,persona_id=?,categoria=?,direccion=? WHERE id =?";
     private static final String SQL_DELETE = "DELETE FROM reclamo WHERE id=?";
-
+    private static final String SQL_SOLVED = "UPDATE reclamo SET fecha_fin=?WHERE id =?";
     //DONE
     @Override
     public List<ReclamoDTO> listar(PersonaDTO persona) {
@@ -61,6 +61,8 @@ public class ReclamoDAOMySQL implements ReclamoDAO {
                 reclamos.add(r);
             }
         } catch (SQLException ex) {
+            throw new RuntimeException("Error de SQL ", ex);
+        } catch (Exception ex) {
             throw new RuntimeException("Error al buscar la lista de reclamos", ex);
         } finally {
             Conexion.Close(rs);
@@ -74,15 +76,18 @@ public class ReclamoDAOMySQL implements ReclamoDAO {
 
     //DONE
     @Override
-    public ReclamoDTO buscar(int reclamoID) {
+    public ReclamoDTO buscarPorId(int reclamoID) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         ReclamoDTO reclamo;
+        Date aux;
+        LocalDate fecha_fin;
         try {
             conn = Conexion.getConnection();
-            stmt = conn.prepareStatement(SQL_SELECT_BY_PERSONA_ID);
+            stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
             stmt.setInt(1, reclamoID);
+            System.out.println(stmt);
             rs = stmt.executeQuery();
             rs.next();
             int id = rs.getInt("id");
@@ -91,12 +96,20 @@ public class ReclamoDAOMySQL implements ReclamoDAO {
             String categoria = rs.getString("categoria");
             String direccion = rs.getString("direccion");
             LocalDate fecha_inicio = rs.getDate("fecha_inicio").toLocalDate();
-            LocalDate fecha_fin = rs.getDate("fecha_fin").toLocalDate();
-            reclamo = new ReclamoDTO(id, descripcion, fecha_inicio, fecha_fin, persona_id, categoria, direccion);
+            aux = rs.getDate("fecha_fin");
+            if (aux != null) {
+                fecha_fin = aux.toLocalDate();
+                reclamo = new ReclamoDTO(id, descripcion, fecha_inicio, fecha_fin, persona_id, categoria, direccion);
+            } else {
+                reclamo = new ReclamoDTO(id, descripcion, fecha_inicio, persona_id, categoria, direccion);
+
+            }
 
             System.out.println(id + " " + descripcion + " " + direccion + " " + fecha_inicio);
 
         } catch (SQLException ex) {
+            throw new RuntimeException("Error de SQL ", ex);
+        } catch (Exception ex) {
             throw new RuntimeException("Error al buscar reclamo", ex);
         } finally {
             Conexion.Close(rs);
@@ -118,9 +131,17 @@ public class ReclamoDAOMySQL implements ReclamoDAO {
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
-            stmt.setInt(1, reclamo.getId());
+            stmt.setString(1, reclamo.getDescripcion());
+            stmt.setObject(2, reclamo.getFecha_inicio());
+            stmt.setObject(3, reclamo.getFecha_fin());
+            stmt.setInt(4, reclamo.getPersona_id());
+            stmt.setString(5, reclamo.getCategoria());
+            stmt.setString(6, reclamo.getDireccion());
+            //"INSERT INTO reclamo(descripcion,fecha_inicio,fecha_fin,persona_id,categoria,direccion) VALUES (?,?,?,?,?,?,?)"
             rows = stmt.executeUpdate();
         } catch (SQLException ex) {
+            throw new RuntimeException("Error de SQL ", ex);
+        } catch (Exception ex) {
             throw new RuntimeException("Error al insertar reclamo", ex);
         } finally {
             Conexion.Close(stmt);
@@ -158,6 +179,8 @@ public class ReclamoDAOMySQL implements ReclamoDAO {
             }
 
         } catch (SQLException ex) {
+            throw new RuntimeException("Error de SQL ", ex);
+        } catch (Exception ex) {
             throw new RuntimeException("Error al listar reclamos segun user", ex);
         } finally {
             Conexion.Close(rs);
@@ -177,17 +200,50 @@ public class ReclamoDAOMySQL implements ReclamoDAO {
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_UPDATE);
-            stmt.setInt(1, reclamo.getId());
-            stmt.setString(2, reclamo.getDescripcion());
-            stmt.setObject(3, reclamo.getFecha_inicio());
-            stmt.setObject(4, reclamo.getFecha_fin());
-            stmt.setInt(5, reclamo.getPersona_id());
-            stmt.setString(6, reclamo.getCategoria());
-            stmt.setString(7, reclamo.getDireccion());
-
+            stmt.setString(1, reclamo.getDescripcion());
+            stmt.setObject(2, reclamo.getFecha_inicio());
+            stmt.setObject(3, reclamo.getFecha_fin());
+            stmt.setInt(4, reclamo.getPersona_id());
+            stmt.setString(5, reclamo.getCategoria());
+            stmt.setString(6, reclamo.getDireccion());
+            stmt.setInt(7, reclamo.getId());
+            System.out.println(stmt);
+            System.out.println(stmt.toString());
             rows = stmt.executeUpdate();
 
         } catch (SQLException ex) {
+            throw new RuntimeException("Error de SQL ", ex);
+        } catch (Exception ex) {
+            throw new RuntimeException("Error al actualizar reclamo", ex);
+        } finally {
+            Conexion.Close(stmt);
+            Conexion.Close(conn);
+        }
+        return rows;
+
+    }
+    
+    @Override
+    public int resolver(int reclamoID) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int rows = 0;
+
+        try {
+            conn = Conexion.getConnection();
+            stmt = conn.prepareStatement(SQL_SOLVED);
+            LocalDate LD = LocalDate.now();
+                        stmt.setObject(1, LD);
+
+            stmt.setInt(2, reclamoID);
+            System.out.println("HOLAAAAAAAAAAAs");
+            System.out.println(stmt);
+            System.out.println(stmt.toString());
+            rows = stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error de SQL ", ex);
+        } catch (Exception ex) {
             throw new RuntimeException("Error al actualizar reclamo", ex);
         } finally {
             Conexion.Close(stmt);
@@ -198,7 +254,7 @@ public class ReclamoDAOMySQL implements ReclamoDAO {
     }
 
     @Override
-    public int eliminar(ReclamoDTO reclamo) {
+    public int eliminar(int reclamoID) {
 
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -207,17 +263,14 @@ public class ReclamoDAOMySQL implements ReclamoDAO {
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_DELETE);
-            stmt.setInt(1, reclamo.getId());
-            stmt.setString(2, reclamo.getDescripcion());
-            stmt.setObject(3, reclamo.getFecha_inicio());
-            stmt.setObject(4, reclamo.getFecha_fin());
-            stmt.setInt(5, reclamo.getPersona_id());
-            stmt.setString(6, reclamo.getCategoria());
-            stmt.setString(7, reclamo.getDireccion());
+            stmt.setInt(1, reclamoID);
+            
 
             rows = stmt.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error de SQL ", ex);
+        } catch (Exception ex) {
+            throw new RuntimeException("Error al eliminar reclamo", ex);
         } finally {
             Conexion.Close(stmt);
             Conexion.Close(conn);
@@ -230,9 +283,10 @@ public class ReclamoDAOMySQL implements ReclamoDAO {
         PersonaDTO p;
         p = new ContribuyenteDTO(1, "Maria", "Maria", "sasa", "ss", 2, "123");
         ReclamoDAOMySQL reclamo = new ReclamoDAOMySQL();
-        reclamo.listar(p);
+        ReclamoDTO reclamin = new ReclamoDTO("palala", LocalDate.now(), LocalDate.now(), 1, "alumbrado", "casasa");
+        //reclamo.insertar(reclamin);
         //reclamo.listarPorUser(1);
-        //reclamo.buscar(2);
+       reclamo.eliminar(4);
         //Date n = new Date(1011, 2, 1);
         //System.out.println(n);
     }

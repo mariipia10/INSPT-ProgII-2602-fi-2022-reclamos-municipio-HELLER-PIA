@@ -29,8 +29,6 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         UsuarioDTO user = (UsuarioDTO) request.getSession().getAttribute("usuario");
         request.getSession().setAttribute("usuario", user);
-        request.getSession().setAttribute("usuario", user);
-
         request.getRequestDispatcher("WEB-INF/pages/login.jsp").forward(request, response);
     }
 
@@ -41,18 +39,32 @@ public class LoginServlet extends HttpServlet {
         String pass = request.getParameter("pass");
         Modelo model = new Modelo(new LoginDAOMySQL(), new UsuarioDAOMySQL(), new PersonaDAOMySQL());
         UsuarioDTO usuario = model.login(user, pass);
-        PersonaDTO persona = new PersonaDTO();
-        if (usuario.es_valido) {
-            System.out.println("Es valido");
-            if(usuario.getEs_admin()){
-                System.out.println("Es admin!");}
-            persona = model.buscarPersonaPorUserID(usuario);
+        PersonaDTO persona = model.buscarPersonaPorUserID(usuario);
+        System.out.println(usuario.toString());
+        System.out.println(persona.toString());
+        if (usuario == null || !usuario.es_valido) {  // Verificamos que el usuario no sea null y que sea válido
+        request.setAttribute("mensajeError", "401: Usuario no encontrado");
+        request.getRequestDispatcher("WEB-INF/views/error.jsp").forward(request, response);
+        return;  // Si el usuario no es válido, redirigimos al error y terminamos la ejecución
+    }
+        request.getSession().setAttribute("usuario", usuario);
+
+        if (usuario.es_valido) { //solo es valido si el user existe, es un flag manual
+            System.out.println(usuario.toString());
+            
+            if (persona == null) { //persona no fue cargada, la creo y mando a completar
+                model.crearPersonaVacia(usuario.getId());
+                request.getRequestDispatcher("/WEB-INF/pages/completarPersona.jsp").forward(request, response);
+            }
+            if (!model.personaEstaCompleta(usuario)) {//persona existe, incompleta
+                request.getRequestDispatcher("/WEB-INF/pages/completarPersona.jsp").forward(request, response);
+            }
+            //persona completa, mando a home y registro login
             LoginDTO login = new LoginDTO(usuario.getId(), LocalDate.now(), LocalTime.now());
             model.cargarLogin(login);
             HttpSession session = request.getSession();
             session.setMaxInactiveInterval(120);
             request.getSession().setAttribute("persona", persona);
-            System.out.println("puede ver login?" + persona.puedeVerLogin());
             request.getRequestDispatcher("reclamos/all").forward(request, response);
         } else {
             request.setAttribute("mensajeError", "401: Usuario no encontrado");

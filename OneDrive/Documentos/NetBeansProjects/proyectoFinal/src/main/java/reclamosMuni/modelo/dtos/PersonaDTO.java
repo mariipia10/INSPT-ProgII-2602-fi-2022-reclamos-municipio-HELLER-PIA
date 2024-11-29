@@ -19,6 +19,7 @@ public class PersonaDTO {
     private String telefono;
     private int id_usuario;
     private String dni;
+    private boolean esta_completa;
     
     public PersonaDTO(){
     }
@@ -31,11 +32,33 @@ public class PersonaDTO {
         this.id_usuario = id_usuario;
         this.dni=dni;
     }
+    public PersonaDTO(int id, String nombre, String apellido, String mail, String telefono, int id_usuario,String dni, boolean esta_completa) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.mail = mail;
+        this.telefono = telefono;
+        this.id_usuario = id_usuario;
+        this.dni=dni;
+        this.esta_completa=esta_completa;
+    }
 
     public void setDni(String dni) {
         this.dni = dni;
     }
+    
+      public String getDni() {
+        return dni;
+    }
 
+    public boolean esta_completa(){
+        return this.esta_completa;
+    }
+
+    public void setEstaCompleta(boolean esta_completa) {
+        this.esta_completa = esta_completa;
+    }
+    
     public String getReclamosSQL(){
         return null;
     }
@@ -94,4 +117,7 @@ public class PersonaDTO {
     public String toString() {
         return "PersonaDTO{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", mail=" + mail + ", telefono=" + telefono + ", id_usuario=" + id_usuario + '}';
     }
+
+ 
+
 }

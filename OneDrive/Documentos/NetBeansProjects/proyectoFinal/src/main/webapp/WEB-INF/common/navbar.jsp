@@ -45,6 +45,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="${pageContext.request.contextPath}/reclamos/all"">Ver reclamos</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/reclamos/all"">Ver reclamos</a>
+                        </li>
                         <div id="linkContainer"></div> 
                         <li class="nav-item">
                             <a class="nav-link" href="${pageContext.request.contextPath}/Logout">Logout</a>

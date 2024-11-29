@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import reclamosMuni.modelo.Conexion;
 import reclamosMuni.modelo.daos.UsuarioDAO;
+import reclamosMuni.modelo.dtos.PersonaDTO;
 
 /**
  *
@@ -54,15 +55,17 @@ public class UsuarioDAOMySQL implements UsuarioDAO {
             } else if (more) {
 
                 System.out.println("Bienvenido " + usuario);
-                user.setValido(true);
                 int esAdmin = rs.getInt(4);
                 user.setEs_admin(esAdmin);
                 user.setNombre_usuario(usuario);
                 user.setPass(pass);
                 user.setId(rs.getInt("id"));
             }
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error de SQL ", ex);
+        } catch (Exception ex) {
+            //e.printStackTrace(System.out);
+            throw new RuntimeException("Error al hacer login", ex);
         } finally {
             Conexion.Close(rs);
             Conexion.Close(prep_stmt);
@@ -72,36 +75,47 @@ public class UsuarioDAOMySQL implements UsuarioDAO {
     }
 
     @Override
-    public UsuarioDTO register(String usuario, String pass) { //DONE - Solo vamos a registrar nuevos usuarios, el admin esta creado 'a mano'
-        
-        Statement stmt = null;
-        Connection conn = null;
-        PreparedStatement prep_stmt = null;
-        int rs = 0;      
-        UsuarioDTO user = new UsuarioDTO(usuario, pass);
-        if (usernameValido(usuario)) {
-            try {
-                conn = Conexion.getConnection();
-                prep_stmt = conn.prepareStatement(SQL_INSERT_NEW_USER);
-                prep_stmt.setString(1, usuario);
-                prep_stmt.setString(2, pass);
-                prep_stmt.setString(3, "0");
-                System.out.println(prep_stmt);
-                rs = prep_stmt.executeUpdate();
+    public UsuarioDTO register(String usuario, String pass){ //, Connection conn) {
+    Connection conn = null;
+    PreparedStatement prep_stmt = null;
+    ResultSet rs = null;
+    UsuarioDTO user = new UsuarioDTO(usuario, pass);
 
-            } catch (Exception e) {
-                e.printStackTrace(System.out);
-            } finally {
-                //Conexion.Close(rs); -> there is no result set when executing an update, no need to close
-                Conexion.Close(prep_stmt);
-                Conexion.Close(conn);
+    
+        try {
+            conn = Conexion.getConnection();
+            prep_stmt = conn.prepareStatement(SQL_INSERT_NEW_USER, Statement.RETURN_GENERATED_KEYS);
+            prep_stmt.setString(1, usuario);
+            prep_stmt.setString(2, pass);
+            prep_stmt.setString(3, "0");
+            if (!usernameValido(usuario)) {
+                System.out.println("REPETIDO");
+                throw new RuntimeException("Usuario repetido");
             }
-        }else{
-            System.out.println("User repetido loco, no lo guardo :D");
-        }
+            System.out.println("NO REPETIDO");
+            prep_stmt.executeUpdate();  // Ejecutamos la inserción
 
-        return user;
-    }
+            rs = prep_stmt.getGeneratedKeys();  // Obtenemos el ID generado
+            if (rs.next()) {
+                int generatedId = rs.getInt(1);  // Obtenemos el ID generado
+                user.setId(generatedId);
+                user.setValido(true);
+                System.out.println("Nuevo usuario insertado con ID: " + generatedId);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+            throw new RuntimeException("Error de SQL", ex);
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+            throw new RuntimeException("Error al registrar usuario", ex);
+        } finally {
+            Conexion.Close(prep_stmt);
+        }
+    
+
+    return user;
+}
+
 
     @Override
     public boolean idValido(int id) { // DONE
@@ -122,7 +136,10 @@ public class UsuarioDAOMySQL implements UsuarioDAO {
                     }
                 }
             } catch (SQLException ex) {
-                throw new RuntimeException("Error al validar ID usuario", ex);
+                throw new RuntimeException("Error de SQL ", ex);
+            } catch (Exception ex) {
+                //e.printStackTrace(System.out);
+                throw new RuntimeException("Error al hacer validar ID de usuario", ex);
             } finally {
                 Conexion.Close(rs);
                 Conexion.Close(stmt);
@@ -146,11 +163,14 @@ public class UsuarioDAOMySQL implements UsuarioDAO {
                 stmt.setString(1, username);
                 rs = stmt.executeQuery();
                 System.out.println(stmt.toString());
-                if (rs.next()){
-                   esValido = false;
+                if (rs.next()) {
+                    esValido = false;
                 }
             } catch (SQLException ex) {
-                throw new RuntimeException("Error al validar ID usuario", ex);
+                throw new RuntimeException("Error de SQL ", ex);
+            } catch (Exception ex) {
+                //e.printStackTrace(System.out);
+                throw new RuntimeException("Error al validar username ", ex);
             } finally {
                 Conexion.Close(rs);
                 Conexion.Close(stmt);
@@ -166,5 +186,7 @@ public class UsuarioDAOMySQL implements UsuarioDAO {
 //        System.out.println(u.usernameValido("pia"));
 //        System.out.println(u.usernameValido("usuario"));
     }
+
+
 
 }

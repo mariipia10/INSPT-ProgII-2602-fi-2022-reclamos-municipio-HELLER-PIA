@@ -52,6 +52,8 @@ public class LoginDAOMySQL implements LoginDAO {
             }
 
         } catch (SQLException ex) {
+            throw new RuntimeException("Error de SQL ", ex);
+        } catch (Exception ex) {
             throw new RuntimeException("Error al obtener logins", ex);
         } finally {
             Conexion.Close(rs);
@@ -75,8 +77,9 @@ public class LoginDAOMySQL implements LoginDAO {
             stmt.setObject(2, login.getDia());
             stmt.setObject(3, login.getHora());
             rows = stmt.executeUpdate();
-
         } catch (SQLException ex) {
+            throw new RuntimeException("Error de SQL ", ex);
+        } catch (Exception ex) {
             throw new RuntimeException("Error al cargar login", ex);
         } finally {
             Conexion.Close(stmt);
@@ -104,8 +107,9 @@ public class LoginDAOMySQL implements LoginDAO {
                 System.out.println(id + " " + dia + " " + hora);
                 logins.add(l);
             }
-
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error de SQL ", ex);
+        } catch (Exception ex) {
             throw new RuntimeException("Error al obtener login x ID", ex);
         } finally {
             Conexion.Close(rs);

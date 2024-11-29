@@ -15,6 +15,12 @@ public class ContribuyenteDTO extends PersonaDTO {
     public ContribuyenteDTO(int id, String nombre, String apellido, String mail, String telefono, int id_usuario, String dni) {
         super(id, nombre, apellido, mail, telefono, id_usuario, dni);
     }
+    public ContribuyenteDTO(int id, String nombre, String apellido, String mail, String telefono, int id_usuario, String dni,boolean esta_completa) {
+        super(id, nombre, apellido, mail, telefono, id_usuario, dni,esta_completa);
+    }
+
+    public ContribuyenteDTO() {
+    }
 
     @Override
     public String getReclamosSQL(){

@@ -11,6 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import reclamoMuni.exceptions.DNIAlreadyExistsException;
+import reclamoMuni.exceptions.EmailAlreadyExistsException;
 import reclamosMuni.modelo.dtos.UsuarioDTO;
 import reclamosMuni.modelo.Modelo;
 import reclamosMuni.modelo.daos.impl.LoginDAOMySQL;
@@ -43,7 +45,7 @@ public class RegisterServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RegisterServlet</title>");            
+            out.println("<title>Servlet RegisterServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet RegisterServlet at " + request.getContextPath() + "</h1>");
@@ -66,8 +68,8 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         UsuarioDTO user;
         user = new UsuarioDTO();
-        String username =request.getParameter("username");
-        String pass =request.getParameter("pass");
+        String username = request.getParameter("username");
+        String pass = request.getParameter("pass");
         request.getSession().setAttribute("usuario", username);
         request.getRequestDispatcher("WEB-INF/pages/register.jsp").forward(request, response);
     }
@@ -83,16 +85,34 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        UsuarioDTO user;
-        user = new UsuarioDTO();
+        UsuarioDTO user = new UsuarioDTO();
+        PersonaDTO persona = new PersonaDTO();
         String username = request.getParameter("username");
-        String pass = request.getParameter("pass");   
-        Modelo model = new Modelo(new UsuarioDAOMySQL());
-        model.register(username, pass);
+        String pass = request.getParameter("pass");
 
-        request.getRequestDispatcher("WEB-INF/pages/register.jsp").forward(request, response);
+        Modelo model = new Modelo(new PersonaDAOMySQL(), new UsuarioDAOMySQL());
 
+        try {
+            user = model.register(username, pass);
+            System.out.println("chalala servlet register usuario creado?");
+            persona = model.crearPersonaVacia(user.getId());
+            request.getSession().setAttribute("usuario", user);
+            System.out.println(user.toString());
+            System.out.println(persona.toString());
+            System.out.println("chalalalala completar persona");
+
+            request.getRequestDispatcher("/WEB-INF/pages/completarPersona.jsp").forward(request, response);
+
+        } catch (DNIAlreadyExistsException e) {
+            request.setAttribute("errorMessage", "DNI ya esta cargado, utiliza otro");
+            request.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(request, response);
+        } catch (EmailAlreadyExistsException e) {
+            request.setAttribute("errorMessage", "Email ya esta cargado, utiliza otro");
+            request.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("errorMessage", "Ha ocurrido un error inesperado");
+            request.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(request, response);
+        }
     }
 
     /**

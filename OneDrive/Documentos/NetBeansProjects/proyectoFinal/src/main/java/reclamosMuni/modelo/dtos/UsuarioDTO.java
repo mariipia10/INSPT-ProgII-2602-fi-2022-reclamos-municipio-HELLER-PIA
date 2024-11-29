@@ -23,10 +23,13 @@ public class UsuarioDTO {
         this.nombre_usuario = nombre_usuario;
         this.pass = pass;
         this.es_admin = es_admin;
+        this.es_valido = true;
     }
     public UsuarioDTO(String nombre_usuario, String pass) {
         this.nombre_usuario = nombre_usuario;
         this.pass = pass;
+        this.es_valido = true;
+
     }
 
     public void setId(int id) {

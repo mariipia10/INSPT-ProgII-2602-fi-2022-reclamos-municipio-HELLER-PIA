@@ -17,9 +17,11 @@ import reclamosMuni.modelo.dtos.UsuarioDTO;
  */
 public interface ReclamoDAO {
     public List<ReclamoDTO> listar(PersonaDTO persona);
-    public ReclamoDTO buscar(int reclamoID);
+    public ReclamoDTO buscarPorId(int reclamoID);
     public int insertar(ReclamoDTO reclamo);
     public List<ReclamoDTO> listarPorUser(UsuarioDTO user);
     public int actualizar(ReclamoDTO reclamo);
-    public int eliminar(ReclamoDTO reclamo);
-    }
+    public int eliminar(int reclamoID);
+    public int resolver(int reclamoID);
+
+}

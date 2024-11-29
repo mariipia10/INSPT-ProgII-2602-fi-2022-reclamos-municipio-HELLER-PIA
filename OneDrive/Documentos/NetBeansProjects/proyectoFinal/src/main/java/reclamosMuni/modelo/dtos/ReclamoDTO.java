@@ -50,6 +50,31 @@ public class ReclamoDTO implements Serializable{
         setCategoria(categoria);
         setDireccion(direccion);
     }
+    public ReclamoDTO(int id,String descripcion,  LocalDate fecha_inicio, int persona_id, String categoria, String direccion) {
+        setId(id);
+        setDescripcion(descripcion);
+        setFecha_inicio(fecha_inicio);
+        setPersona_id(persona_id);
+        setCategoria(categoria);
+        setDireccion(direccion);
+    }
+    
+    public ReclamoDTO(String descripcion,  LocalDate fecha_inicio, LocalDate fecha_fin, int persona_id, String categoria, String direccion) {
+        setDescripcion(descripcion);
+        setFecha_inicio(fecha_inicio);
+        setFecha_fin(fecha_fin);
+        setPersona_id(persona_id);
+        setCategoria(categoria);
+        setDireccion(direccion);
+    }
+    
+    public ReclamoDTO(String descripcion,  LocalDate fecha_inicio, int persona_id, String categoria, String direccion) {
+        setDescripcion(descripcion);
+        setFecha_inicio(fecha_inicio);
+        setPersona_id(persona_id);
+        setCategoria(categoria);
+        setDireccion(direccion);
+    }
 
     public LocalDate getFecha_inicio() {
         return fecha_inicio;

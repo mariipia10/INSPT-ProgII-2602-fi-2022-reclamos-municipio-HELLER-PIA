@@ -16,9 +16,9 @@
         <h1>Bienvenido!</h1>
         <h3>Complete el formulario de registro para avanzar</h3>  
         <br/>  
-        <form name ="register" action="${pageContext.request.contextPath}register" method="post">
+        <form name ="completarPersona" action="${pageContext.request.contextPath}completarPersona" method="post">
             <div class="form-group-row">
-                 <!-- <div class="col-sm-6">
+                 <div class="col-sm-6">
                     <input type="text"  class="form-control" placeholder="Nombre" name="name" required>
                 </div>
                  <div class="col-sm-6">
@@ -32,13 +32,7 @@
                 </div>
                  <div class="col-sm-6">
                     <input type="text"  class="form-control" placeholder="telefono" name="phone" required>
-                </div> -->
-                <div class="col-sm-6">
-                    <input type="text"  class="form-control" placeholder="Usuario" name="username" required>
-                </div>
-                <div class="col-sm-6">
-                    <input type="password" class="form-control" placeholder="Contrasenia" name="pass" required>
-                </div>
+                </div> 
             </div>
             <!-- <input type="hidden" name="deDondeViene" value="${param.origen}">
             --> 
